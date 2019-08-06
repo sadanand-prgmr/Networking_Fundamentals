@@ -1,4 +1,4 @@
-"# NAT" (Network Address Translation)->
+NAT(Network Address Translation)->
 NAT is used in routers, it's purpose is to translate a set of IP addresses to a another set of IP addresses
 NAT helps in preserve the limited amount of IP4 public IP addresses
 Routers provide the private IP addresses to the devices in network and when devices wants to interact with the internet, then
@@ -60,7 +60,7 @@ cat 6 is better then cat 5e in many aspects except they have a shorter maximum d
 Fibre -> Contains individual optical fibres which r tiny tubes made out of glass about the width of human hair
 Fibre cables uses pulses of light to represent the 1's and 0's of the underlying data
 Fibres r used in areas where r many elector magnetic disturbances and they r also more faster at more distances with out
-potential data loss then cables
+potential data loss then cables.
 
 Hubs and Switches ->
 Cables allow u to form point to point network connections, these r networks where only single device at each end exists.
@@ -79,7 +79,7 @@ In Switch u can connect many devices to it so that they can communicate, the dif
 layer device while a switch is a layer 2(Data Link) device, this means the switch can actually inspect the contents of the
 ethernet protocol data being sent around the network determine which system the data is intended for and then only send that
 data to that one system, this reduces the size of collision domain on the network which leads to less re-transmissions and
-high through put
+high through put.
 
 Routers ->
 The hubs and switches are the primary devices used to connect computers on a single network, usually referred to as LAN but
@@ -107,7 +107,7 @@ All the network devices exists to communicate with each other, we call these dev
 Servers could be understand simply as the something will provides data to something which requests those data and the thing
 receiving that data is referred to as Clients, we refer something in above definition bcz it's not just nodes which can be
 servers or clients, individual computer programs running on the same node can be servers and clients to each other.
-So most devices are not servers and clients, almost all nodes are both at the some time
+So most devices are not servers and clients, almost all nodes are both at the same time
 In most network topologies each node is primarily a server or a client, sometimes we refer email server as an email server
 even though it itself is a client of a DNS server bcz its primary reason for existing is to serve data to it's client
 likewise if a desktop machine occasionally access a server and sends that to another computer it's primary reason for
@@ -156,11 +156,11 @@ turns out that the two or more computers end up transmitting data at the same ti
 stop sending data, each device involved in the collision then will be waiting random interval of time before trying to send
 data again, this random interval will help all the computers involved in the collision from colliding again next time when
 they try to transmit any thing
-When a network segment is a collision domain it means that all devices on that segment receive all communication across the
+When a network segment is in a collision domain it means that all devices on that segment receive all communication across the
 entire segment this means we need a way to determine which node the transmission was actually meant for, this is known as
-Media access control address or MAC address
+Media Access Control address or MAC address
 
-MAC Address -> it is globally unique identifier attached to an individual network interface, it's a 48bit no. normally
+MAC Address -> It is globally unique identifier attached to an individual network interface, it's a 48bit no. normally
 represented by 6 groupings of two hexadecimal numbers
 A MAC address is split in two sections
 The first 3 octets of MAC address r known a OUI(Organizationally Unique Identifier) these r assigned to individual hardware
@@ -177,7 +177,7 @@ Transmit data from one device to another device is known as Unicast, A unicast t
 receiving address
 At the ethernet level this done by looking at special bit in the destination MAC address
 If the least significant bit in the first octet of a destination address is set to zero, it means that ethernet frame is
-intended for only the destination address
+intended for only the destination address - @@
 This means it will send to all devices on the collision domain but actually received and process by the intended destination
 If the least significant bit in the first octet of a destination address is set to one, it means u r dealing with multicast
 frame in multicast frame is similarly set to all devices on the local network segment and it will be accepted and discarded
