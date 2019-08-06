@@ -2027,52 +2027,51 @@ The way traceroute works is through a clever manupulation technique of the TTL f
 TTL field by 1st setting it to 1 for the 1st packet, then 2 for the second and so on, by doing this the traceroute ensures
 that the very 1st packet send will be discarded by the 1st router HOP which results in ICMP time exceeded msg, the 2nd 
 packet will make upto the 2nd router and so on, this continues untill the packet finally makes it all the way to it's 
-destination, for each HOP the traceroute will send 3 identical packets
+destination, for each HOP the traceroute will send 3 identical packets  -@@
 In the output of the traceroute u will see that on each line -> the no. of the HOP and the roundtrip time for the each 3
-packets, u will also see the IP of the device at each HOP and host name if traceroute can resolve one.
+packets, u will also see the IP of the device at each HOP and host name if traceroute can resolve one.  -@@
 
 On linux and MacOS traceroute sends UDP packets to very high port no.s, on windows the cmd has name as tracert and defaults 
-to using ICMP echo request 
+to using ICMP echo request  -@@
 On all platforms the traceroute has more options that can be specify using cmdline flags
 
 Two more tools that r similar to traceroute r 'mtr' on Linux and MacOS and 'pathping' on windows, these 2 tools act as long
-running traceroutes, So u can better see how things change over a period of time
+running traceroutes, So u can better see how things change over a period of time -@@
 'mtr' works in realtime and will continously update it's output with all the current aggregate data about the traceroute, u
-can compare this with pathping which runs for 50 seconds and displays the final aggregate data all at once.
+can compare this with pathping which runs for 50 seconds and displays the final aggregate data all at once.  -@@
 
 Testing Port Connectivity ->
-To know that if the things r working at transport layer we use these tools ->
+To know that if the things r working at transport layer we use these tools ->  -@@
 - netcat on linux and MacOS
 - Test-NetConnection on windows
-
 The netcat tool could be run through the cmd 'nc' and has 2 mandatory arguments a 'host' and a 'port', running the cmd ->
 nc google.com 80 will try to establish a connection on port 80 to goolge.com if the connection fails the cmd will exit
 if it succeded u will see a simple cursor which is waiting for more input, this is a way for u to actually send Application
 layer data to the listening service from ur keyboard, to know about the status of the port u can use flag '-z' which stands
-for Zero Input/Output mode, and '-v' for verbose.
+for Zero Input/Output mode, and '-v' for verbose.  -@@
 On windows the Test-NetConnection has some of the similar functionalities if u run it with only host specified like this ->
 Test-NetConnection goolge.com, it will be default for using the ICMP echo request but it will display way more data then nc
-, including the data-link layer protocol being used
-When u issue Test-NetConnection with '-port' flag u can ask it to test connectivity to a specific port
+, including the data-link layer protocol being used -@@
+When u issue Test-NetConnection with '-port' flag u can ask it to test connectivity to a specific port -@@
 
 Both netcat and Test-NetConnection have many options and flags.
 
 Name Resolution tools -> Most of the time ur OS handles all lookups for u but sometimes it is usefull to run these queries
 urself so that u can see exactly what is happening behind the seens, the most common tool for this is 'nslookup' and it is
-available on all 3 operating systems 
-Basic use of nslookup is that when u execute the cmd -> nslookup hostname , the output will tell what server was used to 
-perform the request and the resolution result
+available on all 3 operating systems.  -@@
+Basic use of nslookup is that when u execute the cmd -> nslookup hostname, the output will tell what server was used to 
+perform the request and the resolution result  -@@
 Suppose u needed to know the IP address of twitter.com, u will just enter as -> nslookup twitter.com and the A record will
 be returned.
-nslookup includes the interactive mode which let u set additional options and run lots of queries in a row.
+nslookup includes the interactive mode which let u set additional options and run lots of queries in a row. -@@
 To start intercative mode in nslookup just cmd -> nslookup, then u can add like this after '>' server ip_address // now
 all the name resolution queries will be attempted to be made using that server instead of that default name server
-u can also do > set type=resource_record_type // this will give the result accordingly
+u can also do > set type=resource_record_type // this will give the result accordingly  -@@
 to see more background working in nslookup use > set debug // this will allow the tool to display full response packets
 including any intermidiary requests and all of their contents this will give u lot of data such as TTL, serial number of
-the zone file the request was made against.
+the zone file the request was made against. -@@
 
-Public DNS servers -> 
+Public DNS servers ->  -@@
 - An ISP almost always gives u access to a 'recursive name server' as part of the service it provides.
 - In most cases these name servers r all u really need for ur computer to communicate with other devices on the internet,
 but most buissnesses also run their own DNS servers, this is at very least needed to resolve names of internal hosts, any
@@ -2092,60 +2091,60 @@ were those run by level-3 communications one of the largest ISPs in the world
 The IP addresses for level-3 public DNS servers r -> 4.2.2.1-6, these IPs r easy to remember but their were some mystery
 around them. which is one of the greatest mysteries of the sysadmin wars.
 For googles public DNS IPs r 8.8.8.8 and 8.8.4.4, unlike the level-3 IPs these r officially acknowledged and documented by
-google to be use for free by anyone
+google to be use for free by anyone.  -@@
 
-Most public DNS servers r available globally through anycast.
+Most public DNS servers r available globally through anycast.  -@@
 
 Lots of other organizations also provide public DNS servers but few r as easy to remember.
 Always do ur research before configuring any of ur devices to use that type of name server, hijacking outbound DNS requests
-with faulty responces is easy way to redirect ur users to malicious sites
+with faulty responces is easy way to redirect ur users to malicious sites  -@@
 
 Always make sure the name server is run by a reputable company, and try to use the name servers provided by ur ISP outside
 of troubleshooting scenerios.
 
-Most public DNS serves r also respond to ICMP echo request, so they r great choice for testing general internet connections
+Most public DNS serves r also respond to ICMP echo request, so they r great choice for testing general internet connections  -@@
 
 DNS Registration and Expiration ->
 Registrar -> An orgnaization responsible for assigning individual domain names to other organizations or individuals.
 U just need to create an account with the registrar use their web UI to search for a domain name to determine if it is
 still available then pay the price.
 Once u have the domain name u can either have the registrars name servers act as the authorative name servers for the domain
-or u can configure ur own servers to be authorative
+or u can configure ur own servers to be authorative.  -@@
 
 Domain names can also be transfered from one party to another and from one registrar to another, the way this usally works
 is that the reciepent registrar will generate a unique string of characters to prove that u own the domain and u r allowed
-to transfer it to someone else
+to transfer it to someone else  -@@
 U configure ur DNS settings to contain this string in a specific record usually a TXT record, once this information is 
 propagated it can be confirmed that u both own the domain and aprove it's transfer, after that ownership will move to the
-new owner or registrar.
+new owner or registrar.  -@@
 These registrations only remain for a fixed amount of time, u typically pay the registered domain names for certain no. of
 years and when ur domain name expire any one can grasp and anyone else can register them.
 
 Hosts Files ->
 Before DNS the computer operators needed a language based system to refer to network devices so the original way that
-numbered network addresses were correalted with words was through hosts files.
+numbered network addresses were correalted with words was through hosts files.  -@@
 
 Hosts File is a flat file that contains on each line a network address followed by the host name it can be referred to as
 For Ex -> a line in a host file might read 1.2.3.4 webserver this means that on a computer where this host files resides a
-user can just refere to a web server instead of the IP 1.2.3.4.
+user can just refere to a web server instead of the IP 1.2.3.4.   -@@
 Host files r evaluted by the networking stack of the OS itself that means the presence of an entry their will translate to
-any where u might refer to  in networking atmosphere.
+any where u might refer to in networking atmosphere.
 Host files r ancient but they still stuck around all this time, all modern operating systems including those that power
-our phone and tablets still have host files one reason is bcz of a special IP address which is loopback address
+our phone and tablets still have host files one reason is bcz of a special IP address which is loopback address  -@@
 
-A loopback address always points to itself so it is a way of sending network traffic to urself.
+A loopback address always points to itself so it is a way of sending network traffic to urself.  -@@
 
 Sending traffic to loopback address bypasses all network infrastructure itself and traffic like that never leaves the node,
-The loopback IP for IPv4 is 127.0.0.1 and it configured on every modern operating system through an in host file
+The loopback IP for IPv4 is 127.0.0.1 and it configured on every modern operating system through an host file -@@
 
 Almost every host file in existance will in the very least contain a line that reads 127.0.0.1 localhost, most likely
-followed by ::1 localhost, where ::1 is the loopback address for IPv6.
-Some softwares even require the entry in host files operate properly 
+followed by ::1 localhost, where ::1 is the loopback address for IPv6.   -@@
+Some softwares even require the entry in host files operate properly  -@@
 
-Hosts files r a popular way for computer viruses to disrupt and redirect users traffic.
+Hosts files r a popular way for computer viruses to disrupt and redirect users traffic.  -@@
 The host file also have some trouble shooting purposes that can be helpfull in IT support, Host files r examined before
 DNS resolution attempt occurs on just about every major OS. This lets u force a individual computer to think a certain
-domain name always point at a specific IP.
+domain name always point at a specific IP. -@@
 
 Cloud ->
 Cloud computing is a technological approach where computing resources r provisioned in a shareable way, so that lots of 
@@ -2154,17 +2153,17 @@ users get what they need, when they need it.
 Hardware virtulization which is at the heart of cloud computing, which is a core concept of how cloud computing technologies
 work, it allows the concept of a physical machine and a logical machine to be abstracted away from each other 
 
-Virtualization -> A single physical machine, called a host, could run many individual virtual instances, called guests.
+Virtualization -> A single physical machine, called a host, could run many individual virtual instances, called guests.  -@@
 
 In OS expects to be able to communicate with underline hardware in certain ways, hardware virtulization platforms employ
-Hypervisor
+Hypervisor  -@@
 
 A Hypervisor is a piece of software that runs and manages virtual machines, while also offering these guests a virtual
-operating platform that's indistinguishable from actual hardware.
+operating platform that's indistinguishable from actual hardware.  -@@
 With virtulization a single physical computer can act as a host for many virtual instances they each run their own 
-independent OS and in mnay ways r indistinguishable from the same OS's to running on a physical hardware. ScreenShot(48-1)
+independent OS and in many ways r indistinguishable from the same OS's to running on a physical hardware. ScreenShot(48-1) -@@
 The cloud takes this concept one step further if u build a huge cluster of interconnected machines that can all functions
-as hosts for lots of virtual guests then u got a system that lets u share resources among all of those instances
+as hosts for lots of virtual guests then u got a system that lets u share resources among all of those instances  -@@
 
 Public Cloud -> A large cluster of machines run by another company
 Private Cloud -> Used by a single large corporation and generally physically hosted on its own premises.
@@ -2177,40 +2176,40 @@ in a better way.
 
 IPv6 Addressing and Subnetting ->
 IPv5 was a experimental protocol which represented the concept of connections but later on that connection state was handled
-better by the Transport layer
+better by the Transport layer.  -@@
 IPv6 addresses r 128 bits in size, hence it has the address spaces in undecillion
 Every single IPv6 address that starts with 2001:0db8 has beed reserved for documentation and education which is around
-18 quitillion addresses
+18 quitillion addresses  -@@
 
 There r two rules when it comes to shortening an IPv6 address. The 1st is that u can remove any leading zeroes from a group
 , 2nd is that any number of consecutive groups composed of just zeroes can be replaced with two colons. and this could
-happen once for any specific address otherwise u couldn't know how many zeros were replaced by double colons
+happen once for any specific address otherwise u couldn't know how many zeros were replaced by double colons  -@@
 
 Ex -> 2001:0db8:0000:0000:0000:ff00:0012:3456	- IPv6 address
 	  2001: db8:   0:   0:   0:ff00:  12:3456	- After applying 1st rule
       2001:db8::ff00:12:3456					- After applying 2nd rule
 
-	  ::1		<- IPv6 loopback address
+	  ::1		<- IPv6 loopback address    -@@
 	  
-- Any address that begins with FF00:: is used for multicast which is a way of addressing groups of hosts all at once
-- Address begining with FE80:: r used for link local unicast
+- Any address that begins with FF00:: is used for multicast which is a way of addressing groups of hosts all at once  -@@
+- Address begining with FE80:: r used for link local unicast  -@@
 
-Link-local unicast addresses allow for local network segment communcations and r configured based upon a host's MAC address
+Link-local unicast addresses allow for local network segment communcations and r configured based upon a host's MAC address  -@@
 
 Link-local address r used by IPv6 hosts to recieve their network configuration which is alot like how the DHCP works, The
 hosts MAC address is run through algorithms to turn it from a 48bit no. into a unique 64bit no., its then inserted into the
 addresses host ID, the IPv6 address space is so huge their was never any need to think about spliting it up to address
 classes like we used to do with IPv4 from the very begining in IPv6 address have a very simple line between network ID and
-host ID
-The 1st 64bits(1st 4 groups) of IPv6 address is the network ID and the 2nd 64bits r the Host ID
+host ID   -@@
+The 1st 64bits(1st 4 groups) of IPv6 address is the network ID and the 2nd 64bits r the Host ID  -@@
 
 IPv6 subnetting uses the same CIDR notation, this is used to define a subnet mask against the network ID portion of IPv6
-address
+address  -@@
 
 IPv6 headers -> ScreenShot(49-1)
-ist field is Version field, this is a 4bit field that defines what version of IP is in use
+1st field is Version field, this is a 4bit field that defines what version of IP is in use
 
-2nd field is the Traffic class field, this sis a 8 bit field that defines the type of traffic contained within the IP 
+2nd field is the Traffic class field, this is a 8 bit field that defines the type of traffic contained within the IP 
 datagram and allows for different classes of traffic to recieve different priorities 
 
 3rd field is flow label field, this is a 20 bit field thats used in conjunction with the traffic class field for routers to
@@ -2224,14 +2223,14 @@ with additional data that IPv4 addresses impose on the network, the IPv4 header 
 to do that is to take all of the optional field and abstract them away from the IPv6 header itself, the next header field
 defines what kind of header is immediately after this current one, these additional headers r optional, so they r not 
 required for the complete IPv6 datagram, each of these additional optional headers contain a next header field and allow 
-for a chain of headers to be formed if their is lot of optional configuration
+for a chain of headers to be formed if their is lot of optional configuration  -@@
 
 6th HOP limit field, this is a 8 bit field thats identical in purpose to TTL field in IPv4 header
 
 7th Source Address and 8th Destination Address which r each 128 bits.
 
 If the next header field specifies the another header it will follow at this time, if not a data payload the same legnth
-specified in the payload length field will follow, ScreenShot(50)
+specified in the payload length field will follow, ScreenShot(50)  -@@  -@@
 
 IPv6 and IPv4 harmony -> The only way IPv6 will ever take full replacement of IPv4 is that it should co-exist with IPv4
 at the same time as the old systems can't or don't know how to speak IPv6 and this could work by IPv4 mapped address space
@@ -2240,13 +2239,12 @@ address that begins with 18 0's is then followed by 16 1's is understood as the 
 the remaining 32 bits of the IPv6 address is just the same 32 bit's of the IPv4 address it's meant to represent.
 ScreenShot(51), this gives us a way for IPv4 traffic to travel over an IPv6 network and also vice-versa.
 the primary way right now it is done today is through IPv6 tunnels, these tunnels consist of IPv6 tunnel servers on either
-end of the connection 
+end of the connection   -@@
 IPv6 tunnels -> Servers take incoming IPv6 traffic and encapsulate it within traditional IPv4 datagram, this is then 
-delievered accross the IPv4 internet space where it is received by the another IPv6 tunnel serber, that server performs the
-de-encapsulation and passes the IPv6 traffic further along the network
+delievered accross the IPv4 internet space where it is received by the another IPv6 tunnel server, that server performs the
+de-encapsulation and passes the IPv6 traffic further along the network -@@
 
 Allow with IPv6 tunnel technologies the concept of IPv6 tunnel broker has also emerged 
 
 IPv6 tunnel broker -> These r companies that provide IPv6 tunneling endpoints for u, so u don't have to introduce additional
-equipment to ur network.
-   
+equipment to ur network.   -@@
