@@ -99,7 +99,7 @@ Once traffic is at the ISP more sophisticated router takes over and these core r
 Core routers usually have many different connections to many other routers
 
 BGP(Border Gateway Protocol) -> Routers share data with each other via this protocol, which lets them learn about the most
-optimal paths to forward traffic
+optimal paths to forward traffic -@@
 - Routers are kind of global guides to get to right places
 
 Servers and Clients ->
@@ -530,20 +530,20 @@ network 'B' which has an address space of 10.0.0.0/24 and the router has interfa
 of 192.168.1.1 and on network B it has an IP of 10.0.0.254 remember IP address belongs to networks not individual nodes on
 the network a computer on Network A with IP address of 192.168.1.100 sends a packet to the address 10.0.0.10 and this 
 computer knows that 10.0.0.10 is in it's local subnet, So it sends this packet to the MAC address of it's gateway the router.
-ScreenShot(49)
+ScreenShot(49) -@@
 
 The Routers Interface on Network A receives the packet bcz it sees that destination MAC address belongs to it, the router
 strips away the Data link layer encapsulation by removing ethernet header and ethernet footer and leaving only the network
 layer contents the IP datagram, now the router can directly inspect the IP datagram Header for the destination IP field, it
 finds the destination IP as 10.0.0.10 then router looks at it's routing table and sees that network B or 10.0.0.0/24 network
 is the correct network for the destination IP, it also sees that this network is only one HOP away infect since it's directly
-connected the router even has the MAC address for this IP in it's ARP table.
+connected the router even has the MAC address for this IP in it's ARP table. -@@
 Next a router needs to form a new packet to forward along to network B, it takes all of the data from it's 1st IP datagram
 and duplicates it but it decrements the TTL field by 1 and calculates a new checksum then it encapsulates this new IP 
 datagram inside of a new ethernet frame this time it sets it's own MAC address on the interface of Network B as the source
 MAC address, Since it has the MAC address of 10.0.0.10 in it's ARP table it sets that as the destination MAC address and
 lastly the packet is send to it's destination network (Network B) and the data finally gets delivered to the node living at
-10.0.0.10
+10.0.0.10 -@@
 
 Now lets introduce a New network in above scenerio
 
@@ -555,7 +555,7 @@ network, So it sends the packet to it's gateway the Router between network A and
 content of this packet it sees the destination address of 172.16.1.100 and then lookup through it's routing table, it knows
 that quickest way to 172.16.1.0 /23 network is being at another router with an IP of 10.0.0.1 the router decrements the TTL
 field and sends it along to the router of 10.0.0.1, this router goes through the motions and knows that the destination IP
-of 172.16.1.100 is directly connected and forward the packet to it's final destination
+of 172.16.1.100 is directly connected and forward the packet to it's final destination -@@
 
 The difference in above example and real life scenerio is the scale as the routers r connected to many more routers, as ur
 traffic may have to cross a dozen routers before it reach it's final destination and in order to protect against breakages
@@ -566,7 +566,7 @@ quickest and forward the packet along the path
 Routing Tables ->
 All major operating systems today have a routing table that they can saw before transmitting data, U can still build ur own
 router today if u had a computer with 2 network interfaces and a manually updated routing table, Routing tables varies on the
-class of Router but they all share few things in common as the most basic routing table will have 4 columns
+class of Router but they all share few things in common as the most basic routing table will have 4 columns. -@@
 
 1)Destination network -> This column will contain a row for a each network that the router knows about, this is just the
 defination of the remote network as a network ID and the net mask as ->
@@ -580,9 +580,9 @@ belongs to a routing table will generally have a catch all entry that matches an
 network list for.
 
 2)Next HOP -> This is the IP address of the next router that should receive data intended for the destination network in
-question or this could just state the network directly connected and their aren't any additional hops needed
+question or this could just state the network directly connected and their aren't any additional HOPs needed
 
-3)Total Hops -> On any complex network their will be lots of different paths to get from point A to point B, Routers try to
+3)Total HOPs -> On any complex network their will be lots of different paths to get from point A to point B, Routers try to
 pick the shortest possible path to ensure timely delivery of data but a shortest possible path to a destination network is
 something that could change over time sometimes very rapidly as links could be disconnected, new routers can be introduced, 
 traffic conjection or certain routes could become slow to use
@@ -594,30 +594,30 @@ about the best path or if they knew better path is available
 network, In most cases routing tables r pretty simple as many core internet routers have millions of rows in the routing
 table, these must be consulted for every single packet that flows through a router on it's way to it's final destination
 
-Interior Gateway Protocols -> These protocols helps u identify routing problems on any network
+Interior Gateway Protocols -> These protocols helps u identify routing problems on any network -@@
 The routers use the Routing protocols these r special protocols that routers use to speak to each other in order to share
 what information they might have, this is how the router on the one side of the planet can learn about the best path to a
-network on the other side of the planet
+network on the other side of the planet -@@
 
-Routing protocols fall into two main categories: interior gateway protocols and exterior gateway protocols
+Routing protocols fall into two main categories: interior gateway protocols and exterior gateway protocols -@@
 
-Interior gateway protocols r further split into two categories: Link state routing protocols and distance-vector protocols
+Interior gateway protocols r further split into two categories: Link state routing protocols and distance-vector protocols -@@
 
-Interior gateway protocols are used by routers to share information within a single autonomous system
-Autonomous System is a collection of networks that all fall under the control of a single network operator
+Interior gateway protocols are used by routers to share information within a single autonomous system -@@
+Autonomous System is a collection of networks that all fall under the control of a single network operator -@@
 Ex -> A large coperation that needs to route data between many offices and each of which might have their own local area
 network another example is that the many routers employed by ISP who's reaches r usally national in scale we can contrast
 this with exterior gateway protocols which r used for the exchange of information between independent autonoumous systems.
 
 Distance vector Protocols r older standard, A router using a distance vector protocol basically just takes it's routing table
 which is a list of every network known to it and how far away these networks r in terms of HOP's then the router sends this
-list to every neighbouring router which is basically every router directly connected to it
+list to every neighbouring router which is basically every router directly connected to it -@@
 
 In computer science a 'list' is known as a 'vector'
 
 This is why a protocol that just sends a list of distances to networks is known as distance vector protocol
 With a Distance vector protocol routers don't really know much about the total state of an autonomous system they just have 
-some information about their immediate neighbours
+some information about their immediate neighbours  -@@
 
 Distance vector protocol working ->
 Router A and Router B influence each others routing tables, Router A has a routing table with bunch of entries and one of
@@ -628,21 +628,21 @@ Meanwhile router B is only 2 HOPs away from network X and this will reflect in i
 distance vector protocol sends the basic contents of it's routing table to Router A, now router A will see that network X is
 only 2 HOPs away from router B, even with the extra hop to get from router A to router B this means the network x is only 3
 HOPs away from router A now it forwards data to router B instead of router C So now the router A updates it's routing table
-to reflect this in order to reach network X it should forward traffic through it's own interface 1 to router B
+to reflect this in order to reach network X it should forward traffic through it's own interface 1 to router B  -@@
 
 The Distance vector Protocols r pretty simple by they don't allow for a router to have much information about the state of
 the world outside of their own direct neoghbours bcz of this a router might be slow to react to a change in the network far
-away from it and this is why link state protocols where invented
+away from it and this is why link state protocols where invented -@@
 
 Routers using the link state protocol take more sophesticated approach to determine best path, In this each router advertise
 the state of the link of each of it's interfaces, These interfaces could be connected to another routers or they could be
 direct connections to the networks, the information of each router is propogated to every other router on the autonomous
 system, This means that every router on the system knows every detail about every other router in the system, Each router
 then uses this much larger set of information and runs complicated algorithms against it to determine whats the best path to
-any destination network might be
+any destination network might be -@@
 
 Link state protocols require both the more memory in order to hold all this data and also much more processing power this is
-bcz it has to run algorithms against this data in order to determine the quickest path to update the routing tables
+bcz it has to run algorithms against this data in order to determine the quickest path to update the routing tables -@@
 
 As computer hardware becomes more powerfull and cheaper over the years the link state protocols have made the distance
 vector protocols outdated
@@ -650,24 +650,24 @@ vector protocols outdated
 Exterior Gateway Protocols ->
 They r used to communicate data between the routers representing the edges of an autonomous system, since router sharing data
 using the interior gateway protocols are all under control of the same organization, routers use exterior gateway protocols
-when they need to share information across different organizations
+when they need to share information across different organizations -@@
 Exterior gateway protocols r really key to the internet operating how it does today
 
 The internet is an enourmous mesh of autonomous systems, at the highest levels core internet routers need to know about
 autonomous systems in order to properly forward traffic. Since autonoumous systems r known and defined collections of
-networks, getting data to the edge router of an autonoumous system is the first goal of the core internet routers.
+networks, getting data to the edge router of an autonoumous system is the first goal of the core internet routers. -@@
 
 Internet Assigned Numbers Authority(IANA) is a non-profit organization that helps manage things like IP address allocation, 
-without it anyone can try and use any IP space they wanted which would cause total chaos
+without it anyone can try and use any IP space they wanted which would cause total chaos -@@
 
 Along with managing IP address allocation, the IANA is also responsible for ASN(Autonomous System Number) allocation.
 
 ASN r numbers assigned to individual autonomous systems, just like IP addresses ASN r 32 bit numbers but unlike IP addresses
-they normally referred to as just a single decimal number instead of split out into readable bits, their r 2 reasons for this
+they normally referred to as just a single decimal number instead of split out into readable bits, their r 2 reasons for this -@@
 1) IP addresses need to be able to represent a Network ID portion and a Host ID portion for each network this is more easily
    accomplished by spliting the no. in 4 sections of 8 bits specially back in the day when address classes were used, In ASN
    network needs to change in order for it's represent more networks or hosts, it's just a core internet routing tables that
-   need to be updated to know what the ASN represents
+   need to be updated to know what the ASN represents.
 2) ASN is looked far less then often then IP addresses r, So bcz it can be usefull to be able to look at the IP ->
    9.100.100.100 and know that 9.0.0.0/8 address space is own by IBM, ASN's represent entire autonomous systems just being
    able to look up the fact that AS19604 belongs to IBM
@@ -679,28 +679,29 @@ Non-Routable Address Space ->
 Even in 1996 internet was growing at rate that couldn't be sustain, when IP was first defined it define an IP address as a
 single 32 bit no. a single 32 bit no. can represent around 4 billion unique no. which sounds like a lot but as of 2017 their
 r estimated 7.5 billion humans on earth this means the IPv4 standard doesn't have enough IP addresses available for every
-person on planet
+person on planet.
 
 It also can't account for entire data centers filled with thousands of computers required for large scale technolgy companies
 to operate, So in 1996 the RFC1918 was published, the RFC stands for Requests for Comments and it is a long standing way for
 those how r respinsible for keeping the internet running to agree upon the standard requirements to do so.
+
 RFC1918 outlined a no. of networks that would be defined as Non-routable address space, it is basically a ranges of IP's set
 aside for use by anyone that cannot be routed to as not every computer on internet needs to be able to communicate with every
 other computer connected to the internet, Non-routable address space allows for nodes for such a network to communicate with
-each other but no gateway router attempt to forward traffic to this type of network.
+each other but no gateway router attempt to forward traffic to this type of network.  -@@
 
-NAT allows for computers on Non routable address space to communicate with other devices in the internet
+NAT allows for computers on Non routable address space to communicate with other devices in the internet -@@
 
 RFC1918 defines 3 ranges of IP addresses that will never be routed any where by core routers, that means that they belong to
 no one and any one can use them, infact since they r seperated from the way traffic moves on the internet their is no limit
-that how many people might use these addresses for their internal networks
+that how many people might use these addresses for their internal networks -@@
 
-The primary 3 ranges for Non-Routable Address Space r ->
+The primary 3 ranges for Non-Routable Address Space r ->  -@@
 1) 10.0.0.0/8
 2) 172.16.0.0/12
 3) 192.168.0.0/16
 These ranges r free for anyone to use for their internal networks, the interior gateway protocols will route these address
-spaces, So they r appropriate for use with in an autonomus system but exterior gateway protocols will not
+spaces, So they r appropriate for use with in an autonomus system but exterior gateway protocols will not.  -@@
 
 Transport and Application Layers Intro ->
 The transport layer allows the traffic to be directed to specific network applications and the application layer allows these
@@ -709,10 +710,12 @@ applications to communicate in a way they understand
 Transport Layer ->
 It is liable for lots of important functions of reliable computer networking these include multiplexing and demultiplexing
 traffic, insuring long running connections and data integrity through error checking and data verification.
-The transport layer has the ability to multiplex and demultiplex.
+
+The transport layer has the ability to multiplex and demultiplex.  -@@
+
 Multiplexing in transport layer means that nodes on the network have the ability to direct traffic toward many different
 recieving services, demultiplexing is the same concept just at the receiving end, it takes the traffic that is all aimed at
-the same node and delivering it to the proper receving service. ScreenShot(56)
+the same node and delivering it to the proper receving service. ScreenShot(56)  -@@
 
 The transport layer handles multiplexing and demultipexing through ports
 
@@ -722,18 +725,18 @@ Ex-> HTTP traditional port is 80, if we want to request a web page from a web se
 10.1.1.100 the traffic will be directed to PORT 80 on that computer
 
 Ports r normally denoted with colon after the IP address, Ex -> 10.1.1.100:80, when it is written in this way then it is 
-known as socket address or socket number
+known as socket address or socket number -@@
 The same device might also be running on FTP(File Transfer Protocol)Server, FTP is an older method used for transfering
 files from one computer to another but u still see it in use today.
 FTP traditionally listens on Port 21, So if u want to establish a connection to a FTP server, running on the same IP that r
-example web server running on, U direct traffic to 10.1.1.100:21
+example web server running on, U direct traffic to 10.1.1.100:21 -@@
 
 A single server can host almost all the applications to run a small buissness, The same computer might host an internal
 website, the mail server for company, fileserver, printeserver etc and this possible bcz of multiplexing and demultiplexing
 and the addition of Ports to our address and scheme
 
 Disection of a TCP segment -> Screenshot(57)
-Just like an Ethernet frame encapsulates and IP datagram, the IP datagram ecapsulates TCP segment, As the payload section
+Just like an Ethernet frame encapsulates an IP datagram, the IP datagram ecapsulates TCP segment, As the payload section
 of the Ethernet frame is the entire IP datagram the same way the IP datagram payload section consists the TCP segment
 
 TCP segment is made up of a TCP header and a data section, The data section here is just an another payload area for where
@@ -741,12 +744,12 @@ the application layer places it's data.
 
 TCP header ->
 1st and 2nd field -> Source Port and Destination Port, the Destination Port is the port of the service the traffic is
-intended for and a Source port is a high-numbered port chosen from a special section of ports known as ephemeral ports
-They range typically between 1024 and 65535, and releases the port after the related TCP connection terminates.
+intended for and a Source port is a high-numbered port chosen from a special section of ports known as ephemeral ports -@@
+They range typically between 1024 and 65535, and releases the port after the related TCP connection terminates. -@@
 The source port is required to keep lots of outgoing connections seperate, the destination port such as port 80 is needed to
 make sure that the traffic reaches the web server on a certain IP, similarly a source port is needed when the web server
-replies the computer who make the request can send this data to the program that is actually requesting it and this a when a
-web server respond to ur request to view a web page that this response get received by a web browser and not ur wordprocessor
+replies the computer who make the request can send this data to the program that is actually requesting it and this when a
+web server respond to ur request to view a web page that this response get received by a web browser and not ur wordprocessor.
 
 3rd field -> Sequence number, this is a 32 bit number that's used to keep track of where in a sequence of TCP segments this
 one is expected to be,
@@ -756,38 +759,38 @@ data up into many segments, the sequence number is used to keep track of which s
 could be.
 
 4th field -> Acknowledgement Number, It is lot like the sequence number, it is the number of the next expected segment,
-Simply saying a sequence number of 1 and the acknowledgement no. of 2 could be read as -> this is segment 1 expects segment 2
+Simply saying a sequence number of 1 and the acknowledgement no. of 2 could be read as -> this is segment 1 expects segment 2 -@@
 
 5th field -> Header length(Data offset field), this is a 4bit number that communicates how long the TCP header for this
 segment is, this is so that the receiving network device understands that where the actual data payload begins,
-then their r 6 bits that r reserved for the 6 TCP control flags
+then their r 6 bits that r reserved for the 6 TCP control flags    -@@
 
 6th field -> TCP window, It specifies the range of sequence numbers that might be send before an acknowledgement is required
-, we know that the TCP is a protocol that super rely on acknowledgements, this is done in order to make sure that all 
+, we know that the TCP is a protocol that super relly on acknowledgements, this is done in order to make sure that all 
 expected data is actually being received and then the sending device doesn't waste time in sending data that isn't being
-received.
+received. -@@
 
 7th field -> Checksum, It operates just like the checksum fields at the IP and ethernet level, once all of a segment has been
 injested by the receipent the checksum is calculated accross the entire segment and is compare with a checksum in the header
 to make sure that their was no data corruption along the way
 
 8th field -> Urgent pointer field, It is used in conjunction with one of the TCP control flags to point out particular
-segments that might be more important than others
-This is a feature of TCP that hasn't really seen an adoption and u will probably never find it in modern networking
+segments that might be more important than others.
+This is a feature of TCP that hasn't really seen an adoption and u will probably never find it in modern networking.
 
 9th field -> Options field, this is also rarely used in real world, but it is sometimes used for more complicated flow
-control protocols
+control protocols  -@@
 
 10th field -> Padding field, it is just a sequence of 0's to ensure that the data payload section begins at the expected
-location.
+location.  -@@
 
 11th field -> Data Payload
 
-TCP control flags and 3way handshake -> As a protocol TCP establishs connecetions used to send long chains of segments of
-data, these include IP and ethernet which just send individual packets of data
-The way TCP establishes a connection is through the use of different TCP control flags used in very specific order
+TCP control flags and 3way handshake -> As a protocol TCP establishs connections used to send long chains of segments of
+data, these include IP and ethernet which just send individual packets of data.
 
-TCP 6 control flags ->
+The way TCP establishes a connection is through the use of different TCP control flags used in very specific order -@@
+TCP 6 control flags -> -@@
 1) URG(Urgent) Flag -> A value of 1 here indicates that the segment is considered urgent and that the urgent pointer field
 has more data about this.
 2) ACK(acknowledged) -> A value of 1 in this field means that the acknowledgement number field should be examined
@@ -796,12 +799,12 @@ the recieving end as soon as possible
 A buffer is a computing technique where a certain amount of data is held somewhere before being sent somewhere else, In terms
 of TCP it is used to send large chunks of data more efficiently by keeping some amount of data in a buffer, TCP can deliever
 more meaningfull chunks of data to the program waiting for it but in some cases u might be sending a very small amount of
-information that u need the listening program to respond to immediatley and this is what push flag does
+information that u need the listening program to respond to immediatley and this is what PSH flag does
 4) RST(reset) -> One of the sides in a TCP connection hasn't been able to properly recover from a series of missing or 
 malformed segments, it is a way for one of the parteners in the TCP connection to basically say Wait I don't know what u
-mean, let's start from scratch
+mean, let's start from scratch.
 5) SYN(synchronize) -> It's used when first establishing a TCP connection and makes sure the receiving end knows to examine
-the sequence number field
+the sequence number field.
 6) FIN(finish) flag -> When this flag is set to 1, it means the transmitting computer doesn't have any more data to send data
 and the connection can be closed
 
@@ -812,19 +815,19 @@ Computer B then responds with a TCP segment with both the SYN and ACK flags r se
 let's establish a connection and I acknowledge ur sequence no.
 Then computer A responds with just the ACK flag sent which says, I acknowledge ur acknowledgement lets start sending data.
 Screenshot(59)
-These steps r taken every time when a TCP connection is established anywhere and this is called the 3way handshake
+These steps r taken every time when a TCP connection is established anywhere and this is called the 3way handshake  -@@
 
 Handshake is a way of 2 devices to ensure they r speaking the same protocol and will be able to understand each other
 Once the 3 way handshake is complete the TCP connections is established, Now computer A is free to send what ever data it
 wants from computer B and vice versa, Since both the sides have send SYN,ACK pair to each other so the TCP connection in this
-state is operating in full Duplex
+state is operating in full Duplex   -@@
 Each segment send in either direction should be responded to by a TCP segment with the ACK field set, this way the other side
 always knows what has been received, once one of the device in TCP connection is ready to close the connection, then the
-4 way handshake happens
+4 way handshake happens -@@
 The computer ready to close the connection sends a FIN flag which the other computer acknowledges with the ACK flag, then if
 this computer is also ready to close the connection which is most of the times the case, it will send a FIN flag and this is
-again responed to by an ACK flag.Screenshot(60)
-Hypothetically a TCP connection can stay open in simplex mode with only one side closing the connection but it is not common
+again responed to by an ACK flag.Screenshot(60)  -@@
+Hypothetically a TCP connection can stay open in simplex mode with only one side closing the connection but it is not common  -@@
 
 TCP socket States ->
 Socket is the instantiation of an endpoint in a potential TCP connection
@@ -832,36 +835,36 @@ Instantiation is the actual implementation of something defined elsewhere
 
 TCP sockets require actual Programs to instantiate them, u can contrast this with a Port which is more of a virtual scripted
 thing, in other words u can send traffic to any Port u want but u can only going to get a response if a program has opened a
-socket on that port
+socket on that port  -@@
 TCP sockets can exist in lots of states and being able to understand what they means will help u to able to troubleshoot the
 connectivity issues as an IT support specialist
 
-Some common ones of TCP states r ->
+Some common ones of TCP states r ->  -@@
 
-LISTEN -> A TCP socket is ready and listening for incoming connections, u see this on the server side only
+LISTEN -> A TCP socket is ready and listening for incoming connections, u see this on the server side only.
 
 SYN_SENT -> A synchroniztion request has been sent, but the connection hasn't been established yet, U see this on the client
-side only
+side only.
 
 SYN_RECEIVED -> A socket previously in a LISTEN state has recieved a synchronization request and sent a SYN/ACK back, but it
-hasn't recieved the final ACK from the client yet, u see this on the server side only
+hasn't recieved the final ACK from the client yet, u see this on the server side only.
 
 ESTABLISHED -> The TCP connection is in working order and both sides r free to send each other data, u see this state on the
-both client and server sides of a connection. THis will be true of all the socket states too
+both client and server sides of a connection. THis will be true of all the socket states too.
 
-FIN_WAIT -> This means that a FIN has been sent, but the corresponding ACK from the other end hasn't been received yet
+FIN_WAIT -> This means that a FIN has been sent, but the corresponding ACK from the other end hasn't been received yet.
 
 CLOSE_WAIT -> The connection has been closed at the TCP layer, but that the application that opened the socket hasn't
-released it's hold on the socket yet
+released it's hold on the socket yet.
 
-CLOSED -> The connection has been fully terminated and that no further communication is possible
+CLOSED -> The connection has been fully terminated and that no further communication is possible.
 
 The socket states and their names can vary from operating systems, that's bcz they exist outside the scope of the defination
 of TCP itself, TCP as a protocol is universal in how it's used since every device speaking to TCP protocol has to do this in
-the exact same way for communications to be succesfull
+the exact same way for communications to be succesfull  -@@
 
 Choosing how to describe the states of a socket at the OS level isn't quite universal, When troubleshooting issues at the TCP
-layer make sure u checkout the exact socket state definations for the systems u r working with
+layer make sure u checkout the exact socket state definations for the systems u r working with.
 
 Connection-Oriented and Connectionless Protocols ->
 TCP is a connection-oriented protocol
@@ -876,9 +879,9 @@ incomprehensible by the receiving end and at the lowest level a bit is just an e
 range.
 Their could be other reasons too such as pure conjuction might cause a router to drop ur traffic in favour of forwarding
 more important traffic, Hence the connection-oriented protocols like TCP protect against this by forming connections end
-through a constant stream of acknowledgements
+through a constant stream of acknowledgements.
 Our protocols at lower level of our network model like IP and ethernet use the checksums to ensure that all the data they
-receive was correct but we don't decide if we want to resend the data bcz it's entirely upto the transport layer protocol
+receive was correct but we don't decide if we want to resend the data bcz it's entirely upto the transport layer protocol -@@
 
 At the ethernet level if a checksum doesn't compute then all of that data is just discarded, it's upto TCP to determine when
 to resend this data, since TCP aspects an ACK for every bit of data it sends, it is in the best position to know what data
@@ -896,19 +899,19 @@ Connectionless protocols -> The most common of these is UDP(User Datagram Protoc
 connection and it doesn't even support the concept of acknowledgement.
 
 With UDP u can set a destination Port and send the packet, this is usefull for msgs that r not that important.
-EX -> streaming video, let's imagine that each UDP datagram is a single frame of a video, for the best viewing experience u
+Ex -> streaming video, let's imagine that each UDP datagram is a single frame of a video, for the best viewing experience u
 might hope that every single frame makes it to the viewer but it doesn't really matter if u get lost along the way as the
 video will still be pretty watchable unless it is missing it's lot of frames, So u most probably get able to send higher
 quality video with UDP that's bcz u will be saving more of the available bandwidth for actual data transfer instead of the
 overhead of establishing connections and acknowledging the delivered data segments.
 
 Firewalls -> It is just a device that blocks traffic that meets certain criteria, It is a critical concept for keeping the
-network secure since the primary way to stop traffic u don't want entering a network
+network secure since the primary way to stop traffic u don't want entering a network.
 Firewalls can operate at lots of different layers of the network, their r firewalls which do the inspection at the 
-application layer traffic and firewalls that block the ranges of the IP addresses.
+application layer traffic and firewalls that block the ranges of the IP addresses. -@@
 
 Firewalls r most commonly used at the transportation layer, Firewalls that operate at the transportation layer will generally
-have a configuration enables them to block traffic to certain ports while allowing traffic to other ports.
+have a configuration enables them to block traffic to certain ports while allowing traffic to other ports.  -@@
 
 Lets think of a small buissness network which has 1 server which host mulitple network services, this server might have a web
 server that host companies website and also serving as the file server for the confidential internal document and a firewall
@@ -947,15 +950,15 @@ and data link layers into one and only talk about 4 layers
 
 OSI(Open Systems Connection) model has 7 layers and introduces 2 additional layers between our transport layer and 
 application layer, the session layer is responsible for Facilitating the communication between actual applications and the
-transport layer, it's the part of the operating system that takes the application layer data that's been un encapsulated and
-hand it off to the presentation layer. Screenshot(62)
+transport layer, it's the part of the operating system that takes the application layer data that's been unencapsulated and
+hand it off to the presentation layer. Screenshot(62)  -@@
 
 The presentation layer is responsible for making sure that the unencapsulated application layer data is able to be understood
 by the application in question, this is the part of the Operating system that might handle encryption or compression of data
 , but u will notice that their isn't any encapsulation going on that's why in 5 layer model we merge Application, Session,
-Presentation layers in one as the 5 layer is more commonly used to understand networking for the day to day buissnes
+Presentation layers in one as the 5 layer is more commonly used to understand networking for the day to day buissnes.  -@@
 
-All the layers working in Unison(All together woorking of all 5 layers) ->
+All the layers working in Unison(All together woorking of all 5 layers) ->  -@@
 Imagine 3 networks network A with address space 10.1.1.0/24, network B address space 192.168.1.0/24 and network c address
 space 172.16.1.0/24, the router A sits between network A and network B, with the interface configured with IP 10.1.1.1 on
 network A, and an interface at 192.168.1.254 on network B, now router B sits between network B and network C, it has an 
@@ -970,11 +973,11 @@ networking stack which is part of the operating system responsible for handling 
 wants to establish a TCP connection to 172.16.1.100:80. Screenshot(64)
 So the networking stack will now examine it's own subnet and it sees it lives on the network 10.1.1.0/24 which means the
 destination 172.16.1.100 is on another network, at this point computer 1 knows that it have to send any data to it's gateway
-for routing to a remote network and it's being configured with a gateway of 10.1.1.1
+for routing to a remote network and it's being configured with a gateway of 10.1.1.1.
 
 Next computer 1 look at it's ARP table to determine what MAC address of 10.1.1.1 is but it doesn't find any corresponding
 entry So the computer A broadcast an ARP request for an IP address of 10.1.1.1, So this ARP request will be send to every
-node on the local network(Network A) ,Screenshot(65)
+node on the local network(Network A), Screenshot(65)
 When router A receives this ARP msg it sees it's the computer that currently assigned the IP address of 10.1.1.1 so it 
 responds to computer 1 to let it know about it's MAC address such as 00:11:22:33:44:55 and computer 1 receives this response
 and now knows the hardware address of it's Gateway. Screenshot(66), this means it is really to start constructing the
