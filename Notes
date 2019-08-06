@@ -1,4 +1,4 @@
-NAT (Network Address Translation)->
+"# NAT" (Network Address Translation)->
 NAT is used in routers, it's purpose is to translate a set of IP addresses to a another set of IP addresses
 NAT helps in preserve the limited amount of IP4 public IP addresses
 Routers provide the private IP addresses to the devices in network and when devices wants to interact with the internet, then
