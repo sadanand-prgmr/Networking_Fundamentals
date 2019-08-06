@@ -1379,7 +1379,7 @@ u will find mostly pointer resource records declarations.  -@@
 PTR(Pointer Resource Record) -> It resolves an IP to a Name. -@@
 
 Overview of DHCP -> Managing hosts on a network can be time consuming task, every single computer on a modern TCP/IP based
-network needs to have atleast 4 things specifically configured.
+network needs to have atleast 4 things specifically configured. -@@
 - IP address
 - Subnet mask for the local network
 - Primary gateway
@@ -1393,7 +1393,7 @@ of tricky configuration work and this is where DHCP comes into play.
 As DHCP is critical to know as an IT support specialist when it comes to troubleshooting networks.
 
 DHCP(Dynamic Host Configuration Protocol) -> It is an application layer protocol that automates the configuration process
-of hosts on a network
+of hosts on a network -@@
 
 With DHCP a machine can query a DHCP server when the computer connects to the network and recieve all the networking
 configuration in one go, not just the DHCP reduce the administrative overhead having to configure lots of network devices
@@ -1408,43 +1408,40 @@ malfunctioning, But for a bunch of client devices like dsektops and laptops or e
 that they have the IP on the right network, it's much less important that which IP that is.
 Using DHCP u can configure a range of IP addresses that set aside for these client devices, this ensures that any of these
 devices connect can obtain an IP address when they need one but solves the problem of having to maintaining every list of
-node on the network and it's corresponding IP.
+node on the network and it's corresponding IP.   -@@
 
-Their r few standard ways by which DHCP can operate ->
+Their r few standard ways by which DHCP can operate -> -@@
 DHCP Dynamic Allocation is the most common.
 
-Dynamic Allocation -> A range of IP addresses is set aside for client devices and one of these IPs is issued to these
+1) Dynamic Allocation -> A range of IP addresses is set aside for client devices and one of these IPs is issued to these
 devices when they request one, under the dynamic allocation the IP of a computer could be different almost every time it
 connects the network.
 Automatic allocation is very similar to Dynamic allocation
 
-Automatic Allocation -> A range of IP addresses is set aside for assignment purposes.
-
+2) Automatic Allocation -> A range of IP addresses is set aside for assignment purposes.
 The main difference is that the DHCP server is asked to keep track of which IP is assigned to certain devices in the past,
 using this information the DHCP server will assign the same IP to the same machine each time if possible.
 
-Fixed Allocation -> It requires a manually specified list of MAC address and their corresponding IPs.
-
+3) Fixed Allocation -> It requires a manually specified list of MAC address and their corresponding IPs.
 When a computer requests an IP, the DHCP server looks for it's MAC address in a table and assigns the IP that corresponds to
 that MAC address, if the MAC address isn't found the DHCP server might fallback to automatic or dynamic allocation or it
-might refuse to assign an IP all together
+might refuse to assign an IP all together.
 This can be used as a security measure to ensure that only devices that had their MAC address specifically configured at the
-DHCP server will ever be able to obtain an IP and communicate on the network
+DHCP server will ever be able to obtain an IP and communicate on the network.
 
-DHCP discovery can be used to configure lots of things beyond the touch down here,along with things like IP address and
-primary gateway u can also use DHCP to assign things like NTP servers.
+DHCP discovery can be used to configure lots of things beyond the touch down here, along with things like IP address and
+primary gateway u can also use DHCP to assign things like NTP servers. -@@
 
-NTP(Network Time Protocol) servers r used to keep all computers on a network synchronized in time,
+NTP(Network Time Protocol) servers r used to keep all computers on a network synchronized in time,  -@@
 Hence DHCP can be used for more IP, subnet mask, gateway and DNS server.
 
 DHCP in Action->
 DHCP is an Application layer Protocol which means it realies on the transport, network , datalink and physical layers to
 operate but u might have notices that the entire point of DHCP is to help confgure the network layer itself.
 
-DHCP discovery -> It is the process by which a client configured to use DHCP attempts to get network configuration
-information.
+DHCP discovery -> It is the process by which a client configured to use DHCP attempts to get network configuration information. -@@
 
-The DHCP discovery process has 4 steps->
+The DHCP discovery process has 4 steps-> -@@
 1) The server discovery step -> The DHCP client sends the DHCP discover msg out on to the network, since the machine doesn't
 have an IP and it doesn't know the IP of the DHCP server, specially crafted broadcast msg if formed instead.
 DHCP listens on UDP port 67
@@ -1452,32 +1449,29 @@ And DHCP discovery msgs r always sent from UDP port 68, So the DHCP discover msg
 destination port of 67 and a source port of 68 this is then encapsulated in an IP datagram with an destination IP of
 255.255.255.255 and the source IP of 0.0.0.0, this broadcast msg will deliver to every node on the local area network and
 if a DHCP server is present it will receive this msg. Screenshot(88)
-Next the DHCP server will examine it's own configuration and then make a decision on what if any IP address to offer to the
+2) Next the DHCP server will examine it's own configuration and then make a decision on what if any IP address to offer to the
 client, this would depend if it configured to run with dynamic, automatic or fixed address allocation, the response would be
-send as a DHCPOffer msg with a destination port of 68, a source port of 67, destination broadcast IP of 255.255.255.255 and
+send as a 'DHCPOffer' msg with a destination port of 68, a source port of 67, destination broadcast IP of 255.255.255.255 and
 it's actual IP as the source. Screenshot(89)
 Since the DHCPOffer is also a broadcast, it will reach every machine on the network, the original client will recognize that
 this msg was intended for itself, this is bcz the DHCPOffer has the field that specifies the MAC address of the client that
 send the DHCP discover msg, the client machine will process this DHCPOffer to see what IP has been offered to it.
-
 Technically a DHCP clint could reject this offer, it's totally possible for multiple DHCP servers to be running on the same
 network and for the DHCP client to be configured to be only respond to an offer of IP in a certain range but this is rare.
-
-More often the DHCP clint would respond to the DHCPOffer msg with a DHCPRequest msg, this msg essentially says yes I would
+More often the DHCP clint would respond to the DHCPOffer msg with a 'DHCPRequest' msg, this msg essentially says yes I would
 like to have the IP u offered to me and since the IP hasn't been assigned yet this is again sent from an IP of 0.0.0.0 and
 to the broadcast IP of 255.255.255.255. Screenshot(90)
-
-Finally the DHCP server receives the DHCPRequest msg and responds with the DHCPAck(this is the acknowledgement msg), this
+3) Finally the DHCP server receives the DHCPRequest msg and responds with the 'DHCPAck'(this is the acknowledgement msg), this
 msg is again sent to a broadcast IP of 255.255.255.255 and with a source IP corresponding to the actual IP of the DHCP
 server. Screenshot(91)
-Again the DHCP client would recognize that this msg was intended for itself by inclusion of it's MAC address in one of the
+4) Again the DHCP client would recognize that this msg was intended for itself by inclusion of it's MAC address in one of the
 msg fields, the networking stack on the client computer can now use the configuration information presented to it by the
 DHCP server to setup it's own network layer configuration at this stage the computer that is acting as the DHCP client 
 should have all the information it need to operate in full manner on the network it's connected to all of this configuration
 is known as DHCP lease as it includes an expiration time
 
 A DHCP lease might last for days or only for short amount of time and once a lease has expired the DHCP client would need to
-negotiate new lease by performing the entire DHCP discovery process all over again.
+negotiate new lease by performing the entire DHCP discovery process all over again.  -@@
 
 A client can also release it's lease to the DHCP server which it would do when it disconnects from the network, this would
 allow the DHCP server to return the IP address that was assigned to it's pool of available IPs.
@@ -1505,38 +1499,38 @@ network layer without touching it but with NAT the router will also rewrite the 
 becomes the router IP on Network B or 192.168.1.1 when the datagram gets to computer 2, it will look like it is originated
 from router not from computer 1, Now the computer 2 crafts it's response and sends it back to the router, The router knowing
 that this traffic is actually intended for computer 1 rewrites the destination IP field before forwarding it along.
-Screenshot(93)
-So what NAT is doing in this example is hiding the IP of computer 1 from computer 2, this is known as IP masquerading.
+Screenshot(93)  -@@
+So what NAT is doing in this example is hiding the IP of computer 1 from computer 2, this is known as IP masquerading. -@@
 
 By this IP masquerading no one can establish a connection to ur computer if they don't know what IP address it has, by using
 NAT like above we can actually have 100's of computers on Network A all of their IP's being translated by the router to it's
-own.
+own. -@@
 
 To the outside world, the entire address space of Network A is protected and invisible and this known as One-to-many NAT
-and u will see it in use on lot's of LAN's today.
+and u will see it in use on lot's of LAN's today. -@@
 
 NAT and the Transport layer ->
 NAT at the network layer is pretty easy to follow as one IP address is translated to another by Device usually a router but
 at the transport layer things became little more complicated and several additional techniques come into play to make sure
 everything works properly, With one-to-many NAT we talked about how 100 and even 1000's computers can have their outbound
 traffic translated via NAT to a single IP. This is easy when traffic is outbound but things become more complicated when
-return traffic is involved.
+return traffic is involved. -@@
 We now have potentially 100's of responses all directed at the same IP and the router at this IP needs to figure out which
-responses go to which computer. The simplest way to do this is through Port preservation.
+responses go to which computer. The simplest way to do this is through Port preservation. -@@
 
 Port preservation is a technique where the source port choosen by a client is the same port used by the router, remember
 that outbound connection choose a source port at random from the emerpal ports or the ports in the range 49152 through 65535
 In the simplest setup a router setup to NAT outbound traffic will just keep track of what the source port is and use that to
-direct traffic back to the right computer.
+direct traffic back to the right computer.  -@@
 
 Ex -> A device with an IP of 10.1.1.100 which wants to establish an outbound connection and the networking stack of the
 Operating System chooses port 51300 for this connection, once this outbound connection gets to the router it performs
 Network Address Translation and places it's own IP in the source address field of the IP datagram but it leaves the source
-Port in the TCP datagram the same and stores this data internally in a table. Screenshot(94)
+Port in the TCP datagram the same and stores this data internally in a table. Screenshot(94) -@@
 Now when the traffic returns to the router on 51300 it knows that this traffic needs to be forwarded back to the IP
 10.1.1.100, even with how large the set of emerpal ports is, it's still possible for 2 different computers on a Network to
 both choose the same source port around the same time, when this happens the router normally selects an unused port at
-random to use instead.
+random to use instead. -@@
 
 Port Forwarding -> It is a technique where specific destination ports can be configured to always be delivered to specific
 nodes.
@@ -1545,19 +1539,19 @@ This technique of Port Forwarding allows for complete IP masquerading while stil
 incoming traffic, let's say their is a web server configured with an IP of 10.1.1.5 with Port forwarding, no one even have
 to know this IP, respective web clients will only have to know about the external IP of the router let's say it's 
 192.168.1.1 and any traffic directed at Port 80 on, 192.168.1.1 would get automatically forwarded to 10.1.1.5 response
-traffic would have the source IP, rewritten to look what the external IP of the router. Screenshot(95)
+traffic would have the source IP, rewritten to look what the external IP of the router. Screenshot(95)  -@@
 
 This technique not only allows for IP masquerading, it also simplifies how external users might interact with lots of
-services all run by the same organization.
+services all run by the same organization. -@@
 Ex -> let's imagine a company which have both a web server and a mail server both needs to be accessible to the outside
 world but they run on different servers with different IP's and let's say the web server has an IP of 10.1.1.5 and the mail
 server has an IP of 10.1.1.6, with Port forwarding traffic for weather of these services could be aimed at the same external
 IP and therefore the same DNS name but it would get delivered to entirely different internal servers due to their different
-destination ports. Screenshot(96)
+destination ports. Screenshot(96) -@@
 
 NAT, Non-Routable Address Space and the limits of IPv4 -> The IANA has been incharged of distributing IP addresses since
-1988, For some time now the IANA has primarly been responsible with assigning address blocks to the 5 Regional internet
-registries or RIRs, The 5 RIRs r ->
+1988, For some time now the IANA has primarly been responsible with assigning address blocks to the 5 'Regional Internet
+Registries' or RIRs, The 5 RIRs r ->  -@@
 - AFRINIC -> It serves the continent of africa
 - ARIN -> It serves the united states, canada and parts of the caribbean
 - APNIC -> It is responsible for most of Asia, Australia, New zealand and pacific island nations
@@ -1571,17 +1565,18 @@ run out of  addresses and RIPE was next, In september 2012 LACNIC run out of add
 the same in sep 2015, only AFRINIC has some IPs left but those r predicted to be deplited by 2018.
 
 Wikipedia has a great article about the IPv4 exhaution and the timelines involved althrough IPv6 will resolve these problems
-but  implementing IPv6 world wide is gonna take some time, For now we wanted to continue to grow and we want more people and
+but implementing IPv6 world wide is gonna take some time, For now we wanted to continue to grow and we want more people and
 devices connect to it but without IP addresses to assign a work around is needed such as NAT and Non-routable address space
 
 Non-routable address space is defined in RFC1918 and consist of several different IP ranges that anyone can use, an
 unlimited networks can use Non-routable address space internally bcz internet routers won't forward traffic to it, this
-means their never any global collision of IP addresses when people use those address spaces
-Non-routable address space is largelly usable today bcz of technologies like NAT, with NAT u can have thousands of machines
+means their never any global collision of IP addresses when people use those address spaces. -@@
+
+Non-routable address space is largely usable today bcz of technologies like NAT, with NAT u can have thousands of machines
 using the non-routable address space with just a single public IP and all those computers can still send traffic too and
 recieve traffic from the internet, all u need is one single IPv4 address and via NAT a router with that IP can represent
 lots of computer behind it, it's not a perfect solution but untill IPv6 becomes more globally available Non-routable address
-space and NAT will have to do.
+space and NAT will have to do. -@@
 
 VPNs and Proxies ->
 Virtaul Private Networks -> Buissnes need to make their network secure and they do this by some of the technolgies we have
@@ -1596,33 +1591,32 @@ VPN(Virtaul Private Networks) -> It is a technology that allows for the extensio
 that might not be on that local network.
 
 VPNs comes in many flavours and accomplish lots of different things but the most common example of how the VPNs r used is
-for the employees to access the buissness networks when they r not in the office.
+for the employees to access the buissness networks when they r not in the office. -@@
 
 VPNs r a tunneling protocols, which means they provision access something not locally available when establishing a VPN
-connection u might also say that VPN tunnel has been established.
+connection u might also say that VPN tunnel has been established. -@@
 Ex -> Of an employee who need to access the company resources when not in the office, The employee can use a VPN client to
 establish a VPN tunnel to the company network this will provision the computer with a virtual interface with an IP that
 matches the address space of the network that establish a VPN connection too, by sending data out of this virtual interface
 the computer can access internal resources just like as if they were physically connected to the private network,
-Screenshot(9)
-Most VPN's work by using the payload section of the transport layer to carry an encrypted payload that acctually contains an
+Screenshot(9) -@@
+Most VPN's work by using the payload section of the transport layer to carry an encrypted payload that actually contains an
 entire 2nd set of packets, the network, the transport and the application layers of a packet intended to traverse the remote
-network.
+network. -@@
 Basically this payload is carried to the VPNs endpoint where all the other layers r stripped away and discarded then the
 payload is unecrypted leaving the VPN server with the top 3 layers of a new packet this gets encapsulated with the proper
 data link layer information and sent out accross the network, this process is completed in the inverse as in the opposite
-direction.
+direction. -@@
 VPN's usally requires strict authentication processors in order to ensure that they can only be connected to by computers
-and users authorized to do so infact VPNs were one of the first technology with two factor authentication became common.
+and users authorized to do so infact VPNs were one of the first technology with two factor authentication became common. -@@
 
 Two-factor authentication -> It is a technique where more then just a username and password r required to authenticate
-
-Usally a short lived numerical token is generated by the user through a specilized piece of hardware or software.
+Usally a short lived numerical token is generated by the user through a specilized piece of hardware or software. -@@
 
 VPNs can also be used to establish site to site connectivity conceptually their isn't much difference between how this works
 compare to our remote employee situation, it's jsut that the router or sometimes a specialized VPN device on the one network
 establishes the VPN tunnel to the router or VPN device on the other network, this way 2 physically seperated offices might
-be able to act as one network and access network resources across the tunnel, Screenshot(10)
+be able to act as one network and access network resources across the tunnel, Screenshot(10) -@@
 Just like NAT the VPNs r a general technology concept not a strictly defined protocol, their r lots of unique
 implementations of VPNs and the details of how they work can differ a ton, the most important take away is that VPNs r a
 technology that uses encrypted tunnels to allow for a remote computer or network to act as if its connected to a network
@@ -1630,9 +1624,9 @@ that its not actually physically connected to.
 
 Proxy services -> It is a server that acts on behalf of a client in order to access another service.
 Proxies sits between clients and other servers providing some additional benefit such as anonymity, security, content 
-filtering and increased performance etc.
+filtering and increased performance etc. -@@
 Gateway routers is one of the exmaples of the proxies, u don't hear them refer to as this way but it definately meets the
-defination of a proxy and how it works.
+defination of a proxy and how it works. -@@
 The concept of a Proxy is just that a concept or an abstraction it doesn't refer to any specific implementation, Proxies
 exists at almost every layer of our networking model.
 Most often u hear the term proxy used to refer the web proxies as these r the proxies specifcally built for web traffic, A
@@ -1646,33 +1640,33 @@ this kind of proxy is pretty old and u won't find them in use today Screnshot(11
 We won't find them today bcz most organiztions now have connections fast enough that caching individual web pages doesn't
 provide much benefit and also the web has become much more dynamic as going to www.twitter.com is gonna look different to
 every person with their own twitter account so caching this data won't do much good and in more common use of web proxy
-today might to prevent someone from accessing sites like twitter entirely.
+today might to prevent someone from accessing sites like twitter entirely. -@@
 
-A compnay might decide that accessing twitter during work hours reduces productivity and by using a web proxy they can
+A company might decide that accessing twitter during work hours reduces productivity and by using a web proxy they can
 direct all web traffic to it and allow the proxy to inspect what data has been requested and then allow or deny this request
-depending on what site has been accessed
+depending on what site has been accessed.  -@@
 
 Another example of a proxy is the reverse proxy
 Reverse Proxy -> It is a service that might appear to be a single server to external clients, but actually represents many
-servers living behind it
+servers living behind it  -@@
 An Ex of this how lots of popular websites r architected today such as twitter which recieves so much traffic that their is
 no way a single website server can possibly handle all of it so it might need many web servers in order to keep up
 processing all incoming requests, a reverse proxy in this situation can act as a single front end for many web servers
 behind it and from the clients perspective it looks like they r all connected to the same server but behind the scenes this
-reverse proxy server is actually distributing these incoming requests to lots of different physical servers, Screenshot(26)
+reverse proxy server is actually distributing these incoming requests to lots of different physical servers, Screenshot(26)  -@@
 
 Much like the concept of DNS round robin this is the form of load balancing another way the reverse proxies r commonly used
 by popular websites is to deal with decryption more then half of all traffic on the web is now encrypted and encrypting and
 decrypting data is a process then can take a lot of processing power, Reverse proxies r implemented in order to use hardware
 built specifically for crypotography to perform to perform the encryption and decryption work so that the web servers r free
-to just serve content.
+to just serve content. -@@
 
 Proxies come in many other flavours, but important take away is that the proxies r any server act as an intermediory between
 the client and the other server
 
 Connecting to the Internet ->
 POTS and Dial-up ->
-Dial-up, Modems and Point to Point Protocols ->
+Dial-up, Modems and Point to Point Protocols -> -@@
 Public Switch Telephone Network(PSTN) is also sometimes referred to as Plain old telephone service or POTS on the basis on
 this the system was built called USENET before this a very primitive form was used of a Dial-up connection to exchange a
 series of msgs with each other, Dial-up connection uses POTS for data transfer and get its name bcz the connection gets
@@ -1685,17 +1679,17 @@ After all the telephone system was developed to transmit voice msgs or sounds fr
 how line coding is used to turn 1's and 0's to modulating electrical charges across ethernet cables, Earlier modems had very
 low Baud Rate.
 
-Baud Rate is a measurement of how many bits can be passed across a phone line in a second 
+Baud Rate is a measurement of how many bits can be passed across a phone line in a second.   -@@
 
 By the late 1950's computers can only send a data to each other only on a phone line for 110bps and by the time USENET was
 developed this rate was increased to 300bps
 Dial-up internet connectivity is pretty rare today but it hasn't completely gone away on some rural areas it might be the
-only option still available
+only option still available. -@@
 
 Broadband connections -> In terms of internet connectivity it is used to refer to the any connectivity technology that isn't
 dial-up internet, and broadband is always faster then the dial-up and it refers to connections that r always ON this means
 that the long lasting connections that don't need to be establish with each use, their r essentially links that r always
-present Broadband shows the true potential of internet for the buissnesses.
+present Broadband shows the true potential of internet for the buissnesses. -@@
  
 In a office with few employees the bandwidth available by a single dial-up connection would quickly be over saturated by
 just a few users.
@@ -1704,10 +1698,10 @@ T-carrier technologies
 
 T-carrier Technologies -> Originally invented by AT&T in order to transmit multiple phone calls over a single link,
 eventually they also became common transmission systems to transfer data much faster then any dial-up connection could
-handle.
+handle.  -@@
 
 In earlier days for the dial-up connections a 2mb of photo could take upto 19.4 mins to be download at the speed of
-14.4 kb/s.
+14.4 kb/s.  -@@
 
 T-carrier technolgies require dedicated lines which make them more expensive for this reason u usually see them to be use by
 only the buissnesses but other broadband solutions also exists for the busissness and consumers such as ->
@@ -1722,7 +1716,7 @@ transfers, Each of the 24 phone channels was cable of transmiting data at 64 kbs
 transmiting data at 1.544 mbs
 Over the years the phrase T1 has come to mean any twisted pair copper connection capable of speeds of 1.544 mbps even is
 doesn't follow strictly the original transmissions system 1 specification
-Originally T1 technology was only used to connect different telecom compnay sites to each other and to connect these
+Originally T1 technology was only used to connect different telecom company sites to each other and to connect these
 companies to other telecom companies but with the rise of the internet more and more buissness started to pay for the lines
 installed at their offices to have faster intenet connectivity more improvements to the T1 line were made by developing a
 way of multiple T1's to act as a single link, So a T3 line is 28 T1's all multiplexed achiving a total throughput speed of
@@ -1739,33 +1733,35 @@ traditional dial-up technology and this allowed for the normal voice phone calls
 on the same line, DSL technologies also uses their own modems but they were known as DSLAMs(Digital Subscriber Line Access
 Multiplexers) just like Dial-up modems these devices establish data connections across phone lines but unlike dial-up
 connections they r usually long running, this means the connection is generally established when the DSLAM powered on and
-isn't torn down untill the DSLAM is powered off.
+isn't torn down untill the DSLAM is powered off.   -@@
 Their r lots of different kinds of DSL available but they all vary in a pretty minor way, for long time the two most common
 types of DSL were ADSL and SDSL
 
 ADSL stands for Asymmetric Digital Subcriber Line, they featured different speeds for outbound and incoming data, generally
 this means the faster download speeds and slower upload speeds as home users rarely need to upload as much data as they
-download as the upload data is much smaller then the download data for a webpage 
+download as the upload data is much smaller then the download data for a webpage  -@@
 
 SDSL stands for Symmetric Digital Subcriber Line, this is basically the same as ADSL except the uploads and the downloads
-speeds r the same, as one point the SDSL was mainly used by the buissnesses that hosted servers that needed to send data to
+speeds r the same -@@
+As one point the SDSL was mainly used by the buissnesses that hosted servers that needed to send data to
 clients as the general bandwidth available on the interent has been expanded and as the cost of operation has come down over
 the years SDSL is now more common to both buissnesses and home users, Most SDSL technologies have a upper cap of 1.544 mbps
 or the same as the T1 line.
 
 Further developments in the SDSL technolgies have lead to HDSL(Hogh Bit-rate Digital Subscriber Lines) these r DSL
-technologies that provision speeds above 1.544 mbps, their r lots of minor variations in DSL technology on the while
-offering different bandwidth options and operating distances, these variations can be so numerous and minor that they hardly
-differentiate from each others.
+technologies that provision speeds above 1.544 mbps -@@
+Their r lots of minor variations in DSL technology on the while offering different bandwidth options and operating distances, these
+variations can be so numerous and minor that they hardly differentiate from each others.
 
 Cable Broadband -> Originally all television broadcasts were wireless transmissions sent out by giant television towers and
 received by small antenas at the homes, The 1st cable television technology were mainly for the towns which were out of the
 range of the these big television towers at the time
 
 In 1984 Cable Communications Policy Act was passed this deregualted the cable television buissness and caused a massive boom
-in growth and adoption and soon the cable television infrastructure was about the size of the public telephone system and
-just line telephone lines it was realized that these cables can be used for much more data transfer then the televison data
-which could be used for the internet and this technology refer to the cable broadband.
+in growth and adoption and soon the cable television infrastructure was about the size of the public telephone system.
+
+Just line telephone lines it was realized that these cables can be used for much more data transfer then the televison data
+which could be used for the internet and this technology refer to the cable broadband. -@@
 
 The main difference how the cable broadband works in compare to other broadband solutions is that the cables r generally
 known as the Shared bandwidth technology
@@ -1784,79 +1780,80 @@ Today most cable operaters have tried to upgrade their networks to the point tha
 shared bandwidth but it's also still common to see, the cable internet connections slow down during the periods of heavy use
 , like when lots of people in the same region r using their internet connection at the same time, cable internet connections
 r usually managed which r known as the cable modems, this is the device that sits at the edge of the consumers network and
-connects it to the cable modem termination system(CMTS)
+connects it to the cable modem termination system.
 
-CMTS connects lots of different cable connections to an ISPs core network
+CMTS(Cable Modem Termination System) connects lots of different cable connections to an ISPs core network  -@@
 
 Fiber Connections -> For the long time these connections were only used by ISPs within their core networks or may be for use
 in data centers bcz for their expensive installation but now it is become popular to use fiber to deliver data to the end
 user but it depends on the various measures still that is why the term FTTX is used
-FTTX(Fiber to the X) -> here X can be many things 
+
+FTTX(Fiber to the X) -> here X can be many things  -@@
 
 FTTN(Fiber to the Neighbourhood) -> This means the fiber technologies r used to deliver data to a single physical cabinet
 that servers a certain amount of population, Screenshot(30), From this cabinet twisted pair copper or COAX might be used for
-the last length of the distance 
+the last length of the distance.  -@@
 
-FTTB(Fiber to the Building) -> These r genrally the cables to building physically enter, FTTB is a set up were fiber
+FTTB(Fiber to the Building) -> These r generally the cables to building physically enter, FTTB is a set up were fiber
 technology is used for data delivery to an individual building after that twisted pair copper is typically used to actually
-connect those inside of the building.
+connect those inside of the building. -@@
  
 FTTH(Fiber to the Home) -> This is used in the instances were fiber is run to each individual residences, in neighbourhood
-or the appartment building, FTTH and FTTB make both also to be refered as the FTTP(Fiber to the Premises)
+or the appartment building, FTTH and FTTB make both also to be refered as the FTTP(Fiber to the Premises) -@@
 
-Instead of the modem the demarkation point for the fiber technologies is known as ONT
+Instead of the modem the demarkation point for the fiber technologies is known as ONT -@@
 
 ONT(Optical Network Terminator) -> It converts data from protocols the fiber network can understand, to those that more
-traditional, twisted-pair copper networks can understand.
+traditional, twisted-pair copper networks can understand.  -@@
 
 WAN(Wide Area Network) Technologies -> Suppose u r incharge of the network at a small company, at 1st buissness has only few
 employees with a few computers in a single office, u decide to use non-routable address space for the internal IPs, u set up
 a router and configure it to perform NAT, U configure a local DNS server and a DHCP server to make network configuration
 easier and for of this to work u sign a contract with the ISP to deliver a link to the internet to this office, So ur users
-can access the web.
+can access the web.  -@@
 Now imagine the company grows and u r using non-routable address space for ur internal IPs, So u have plenty of space to
 grow their may be some sales people need to connect to the resources on the LAN u set up while u r on the road, so u can
 figure a VPN server and make sure the VPN server is accessible via Port forwarding, Now u can have employees all over the
 world to connect to the office LAN, but then CEO decides that they r going to open a new office across the city, suddenly
 hand full of sales people requiring remote acess to the resources on ur Network u have an entire 2nd office that needs it
-and this is where WAN technology come into play.
-Unlike LAN the WAN acts like a single network, but spans across multiple physical locations
+and this is where WAN technology come into play.  -@@
+Unlike LAN the WAN acts like a single network, but spans across multiple physical locations.  -@@
 
 WAN technologies usally require that u contact a link across the internet with ur ISP, this ISP handle sending ur data from
 one side to the other so it could be like all of ur computers r in the same physical location, A typical WAN setup has a few
-sections.
+sections.   -@@
 Imagine one network of computers on the one side of the country and the other network of computers on the others each of
-thosevnetworks ends at a Demarcation Point which is where the ISPs network takes over, the area between each Demarcation
-point and the ISPs actual core network is called a local loop, this local loop would be like a T carrier line or a high
+those networks ends at a Demarcation Point which is where the ISPs network takes over, the area between each Demarcation
+point and the ISPs actual core network is called a 'local loop', this local loop would be like a T carrier line or a high
 speed optical connection to the providers local regional office, from their it will connect out to the ISPs core network and
-the internet at large, Screenshot(31)
+the internet at large, Screenshot(31)  -@@
 
 WANs work by using no. of different protocols at the data link layer to transport ur data from one side to another infact
-these same protocols r where at sometimes at work at the core of the internet itself instead of our more familiar ethernet
+these same protocols r where at sometimes at work at the core of the internet itself instead of our more familiar ethernet  -@@
 
 Point-to-point VPNs is a popular alternative to WAN technologies, WAN technologies r great when u need to transport large
 amounts of data across lots of sites bcz WAN technologies r built to be super fast, DSL line or cable might be way cheaper
-but it can't handle the load required in some of these situations.
+but it can't handle the load required in some of these situations.  -@@
 But for last few years the companies r moving their busisness in to the cloud, Cloud lets companies out source its all or
 different pieces of infrastructure to other companies to manage.
 Such the concept of email in past a company had to run their own email server if they wanted an email presence at all, 
 today u can have a cloud hosting provider host ur email server for u, even u can use email as a service provider then u
 won't have an email server at all anymore u just have to pay another company handle everything about ur email servers, with
-these type of cloud solutions in place lots of buissnes no longer require a exstream high speed connections between their
-sites, this makes the expense of a WAN technology totally unnecassry instead companies can use Point-to-point VPNs to make
-sure their different sites still communicate with each other.
+these type of cloud solutions in place lots of buissnes no longer require a extream high speed connections between their
+sites, this makes the expense of a WAN technology totally unnecassry. 
+Companies can use Point-to-point VPNs to make sure their different sites still communicate with each other instead of using WAN. -@@  
 
 Point-to-point VPN also called site-to-site VPN eastablishes a VPN tunnel between two sites this operates alot like the
-traditional VPN setup lets individual users act as if they r on the network they r connecting to, Screenshot(32)
+traditional VPN setup lets individual users act as if they r on the network they r connecting to, Screenshot(32)  -@@
 Its just that the VPN tunneling logic is handled by network devices at either side so that users don't have to establish
 their own connections.
 
 Wireless Networking ->
 The most common specification for how wireless networking devices should communicate r defined by the IEEE 802.11 standards,
-this set of specifications also called the 802.11 family make up the set of technologies called WiFi.
+this set of specifications also called the 802.11 family make up the set of technologies called WiFi.  -@@
 
 Wireless networking devices communicate with each other through radio waves, different 802.11 standards genually use the
-same basic protocol but might operate at different Frequency bands
+same basic protocol but might operate at different Frequency bands  -@@
 
 Frequency Band -> A Frequency band is a certain section of the radio spectrum that's been agreed upon to be used for certain
 communications such as in North America FM radio transmissions operate between 88 and 108 Mhz, this specific frequency band
@@ -1866,25 +1863,26 @@ bands.
 The most common specifications u might run into r 802.11b, 802.11a, 802.11g, 802.11n and 802.11ac, they r listed here in the
 order they were adopted each newer version of the 802.11 specifications has genually seen some improvement whether it is
 higher access speeds or the ability for more devices to use the network simultaneously.
-In terms of our networking model u should think 802.11 protocols as defining how we operate at physical and data-link layers
+
+In terms of our networking model u should think 802.11 protocols as defining how we operate at physical and data-link layers. -@@
 
 In 802.11 frame has a no. of fields, Screenshot(33)
 
 1st field is Frame Control, this field is 16 bits long and contains a no. of subfields that is used to describe how the
-frame itself should be processed, this includes things like what version of 802.11 was used
+frame itself should be processed, this includes things like what version of 802.11 was used  -@@
 
 2nd field is Duration, it specifies how long the total frame is so the reciver would know how long it should expect to have
-to listen to the transmition
+to listen to the transmition  -@@
 
-3rd, 4th, 5th and 7th are the address fields, so their r 4 address fields
+3rd, 4th, 5th and 7th are the address fields, so their r 4 address fields -@@
 
 Wireless access point -> A device that bridges the wireless and wired portion of a network, a single wireless network might
 have lots of different access points to cover a large area devices on a wireless network which will associate with certain
 access point, this is usually the one they r physically closet to but it can also be determined by other things like general
 signal strength and wireless interferance, associations isn't just important for the wireless device that talk to specific
-access point it also allow for the incoming transmissions to the wireless device to be set by the right access point
+access point it also allow for the incoming transmissions to the wireless device to be set by the right access point. -@@
 
-Their r 4 address fields that needs to be roomed to indicate which wireless access point should be accessing the frame so->
+Their r 4 address fields that needs to be roomed to indicate which wireless access point should be accessing the frame so->  -@@
 - we have our normal source Address field which would represent the MAC address of the sending device
 - We also have the intended destination field on the network
 - We have the reciving address and the transmitor address these r described in the order of Address 1 to 4
@@ -1894,21 +1892,21 @@ would be the MAC address of whatever have just transmitted the frame
 In lots of situations the destination and reciver address might be the same usally the source and transmitor addresses r
 also the same but depending on exactly the specific wireless network is been architected this won't always be the case, 
 sometimes wireless access points will relay these frames from one another, Since all addresses in 802.11 frame r MAC
-addresses each of those 4 fields is 6 bytes long.
+addresses each of those 4 fields is 6 bytes long.  -@@
 
 6th field is Sequence Control field, it is 16 bits long and mainly contains a sequence no. used to keep track of ordering
 the frames
 8th field is Data Payload
 9th field id FCS
 
-Wireless Network configurations -> The ways it could be configured r ->
+Wireless Network configurations -> The ways it could be configured r ->  -@@
 - ad-hoc networks were nodes all speak directly to each other
 - Wireless LANS(WLANS) were one or more access points act as a bridge between a wireless and a wired network
 - Mesh networks which is the hybrid of above two
 
 Ad-hoc networks r the simplest of the 3, In it their isn't really any supporting network infrastructure every device
 involved with the network communicates with every other device within range and all nodes help pass along msgs, 
-Screenshot(34)
+Screenshot(34)   -@@
 Even though the most simple ad-hoc networks are not the most common type of wireless network but they do have some practical
 applications, some smartphones can establish ad-hoc networks with other smart phones in the area so that people can exchange
 photos, videos or contact information, u also sometime see ad-hoc network used in industrial or warehouse settings were
@@ -1917,10 +1915,10 @@ networks can be powerfull tools during disaster situations, if a natual disaster
 all of the existing infrastructure in area, disaster relief professionals can use ad-hoc network to communcate with each
 other while they perform searching rescue efforts.
 
-The most common type of wireless network used is buissness world is wireless LAN, WLAN consists of one or more access points
-which act as bridges between the wireless and wired networks, A wired network operates as an normal LAN, though wired LAN
-contains the outbound internet link, In order to access resources outside the WLAN, wireless devices would communicate with
-access points they then forward traffic along to the gateway router for everything proceeds like a normal, Screenshot(35)
+The most common type of wireless network used is buissness world is wireless LAN(WLAN) -@@
+WLAN consists of one or more access points which act as bridges between the wireless and wired networks, A wired network operates as an
+normal LAN, though wired LAN contains the outbound internet link, In order to access resources outside the WLAN, wireless devices would
+communicate with access points they then forward traffic along to the gateway router for everything proceeds like a normal, Screenshot(35)
 
 Mesh Networks r kind of like ad-hoc networks since lots of the devices can communicate with each other wirelessly forming a
 Mesh, if u have to draw lines between all the nodes most mesh networks u run into r only made up of wireless access points
@@ -1931,7 +1929,7 @@ network.
 Wireless channels -> Channels r individual smaller sections of the overall frequency band used by a wireless network
 channels help address an old networking concern which is collision domains, the problems of collisions domain on the wired
 network is mostly reduced by the switches, but the wireless devices r doomed to talk with over each other and channels help
-fix this problem to a certain extent.
+fix this problem to a certain extent.  -@@
 When we talk about the frequency bands used by Wifi we talk about only 2.4 Ghz and 5 Ghz, So the wireless networks that
 operate on 2.4Ghz band we roughly means that it works on the band of 2.4 Ghz to 2.5 Ghz and between these 2 frequencies
 their r no. of channels each with a width of certain megahertz,Screenshot(36), since different countries and regions have
@@ -1946,7 +1944,7 @@ for 802.11b network channel 1, 6 and 11 will never overlap, today wireless netwo
 channels r most conjested, some access points will only perform this analysis when they start up, others will dynamically
 change their channel as needed between most two scenerios and manually specified channels u can still run into situations
 where u experience heavy channel conjuction, this is specially true in dense urban areas with lots of wireless networks and
-close proximity.
+close proximity.  -@@
 
 Understanding how these channels overlap for all of the 802.11 specification is the way u can help troubleshoot bad wireless
 connectivity problems or slow downs in the network and u wanna avoid collision domains wherever u can, u wanna make sure
@@ -1955,20 +1953,21 @@ that both ur access points and those of neighbouring buissness overlap channels 
 Wireless Security ->
 WEP(Wired Equivalent Privacy) -> Do this from Zaid Wifi Hacks Notes
 WPA(Wifi protected Access) -> Do this from Zaid Wifi Hacks Notes
+
 Another common way to help securing ur Wireless networks is through MAC filtering -> Through MAC filtering u configure ur
-access points to only allow for connections from a specific set of MAC addresses belonging to devices u trust
+access points to only allow for connections from a specific set of MAC addresses belonging to devices u trust.  -@@
 
 Cellular Networking -> They r now common all over the world, in some places for using the cellular network for the internet
 access is the most common way of connecting at high level the cellular networks has lot in common to 802.11 networks, just
 like their r many 802.11 specifications their r lots of different cellular specifications and they also operate over radio
 waves and they r specific frequency bands, specifically reserved for cellular transmissions one of the biggest difference
-is that these frequencies can travel over longer distances more easily usually over many miles.
+is that these frequencies can travel over longer distances more easily usually over many miles.  -@@
 
 Cellular networks r built around the concepts of cells, each cell is assigned a specific frequency band for use neighbouring
 cells r setup to use bands that don't overlap,Screenshot(38), Infact the cell towers that broadcast and recieves cell
-transmissions can be though of like access points just with a much larger range.
+transmissions can be though of like access points just with a much larger range. -@@
 Lots of devices today use cellular networks for communcation and not just phones also tablets and some laptops also have
-cellular antenas, its beoome more an more common for high end automobiles to have built in cellular access too.
+cellular antenas, its beoome more an more common for high end automobiles to have built in cellular access too. -@@
 
 Error detection is the ability for a protocol or program to determine that something went wrong.
 
@@ -2017,7 +2016,7 @@ communication, it will also show the TTL remaining and how large the ICMP msg is
 be some statictics displayed like percentage of packets transmitted and received, average round trip time.
 
 ON Linux and MacOS the ping cmd will run untill its interupted by an end user sending a interept cmd by ctrl + c and on
-windows ping is default to send only 4 echo requests.
+windows ping is default to send only 4 echo requests.  -@@
 
 In all environments ping supports a no. of cmd line flags that let u change the behaviour like the no. of echo requests
 send, how large they should be and how quickly they should be sent.
