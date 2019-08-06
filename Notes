@@ -120,7 +120,7 @@ The physical layer consist of devices and means of transmitting bits across comp
 A bit is the smallest representation of data that a computer can understand, it's a one or a zero
 Modulation is a way of varying the voltage of this charge moving across the copper cable
 In Computer Networks this kinds of modulation is commonly called Line Coding, it allows devices on either end of the link to
-understand the electrical charge in certain state is 0 and in another state is 1
+understand the electrical charge in certain state is 0 and in another state is 1 -@@
 
 Twisted Pair Cabling and Duplexing -> These twisted pair of copper cables allow for Duplex communication
 Duplex communication is the concept that information can flow in both the directions across the cable
@@ -205,24 +205,24 @@ Almost all sections of a ethernet frame are mandatory and most of them have a fi
 The First part of Ethernet Frame is known as Preamble, it is 8 bytes long and can itself be split into two sections, the 1st
 7 bytes r alternating series of 1's and 0's, these act partially as buffer between frames and can also be used by the network
 interfaces to synchronize internal clocks they use to regulate the speed at which they send data and the last byte in 
-Preamble is known as SFD
+Preamble is known as SFD - @@
 SFD(Start Frame Delimiter) -> It signals to a receiving device that the preamble is over and the actual frame contents will
                               now follow
 
 The Second part is the Destination Mac Address, this is the hardware address of the intended recipient, it is 6 bytes long
 
-The Third part is Source Address, it is 6 bytes long, it is the place from where the frame is originated from
+The Third part is Source Address, it is 6 bytes long, it is the place from where the frame is originated from.
 
 The Fourth Part is VLAN header, it is 4 bytes long, it indicates that the frame itself is called VLAN's frame, If a VLAN
-header is present the ethertype field follows it
-VLAN(Virtual LAN) -> It's a technique that lets u have multiple logical LAN's operating on the same physical equipment
+header is present the ethertype field follows it.
+VLAN(Virtual LAN) -> It's a technique that lets u have multiple logical LAN's operating on the same physical equipment.
 
 Any frame with the VLAN tag will only be delivered out of a switch interface configured to relay that specific tag, this way
 u can have a single physical network that operates like it's multiple LAN's
 VLAN's r usually used to segregate different forms of traffic
-So u might see a companies IP phones operate on one VLAN while all desktops operating on another
+So u might see a companies IP phones operate on one VLAN while all desktops operating on another.
 
-The Fifth Part is Ethernet Type, it is 2 bytes long, it is used to describe the protocol of the contents of the frame
+The Fifth Part is Ethernet Type, it is 2 bytes long, it is used to describe the protocol of the contents of the frame.
 
 The Sixth part is Data Payload, it ranges from 0-1500 bytes
 A Payload in networking term which is the actual data being transported, which is everything that isn't a header
@@ -230,16 +230,16 @@ The data payload of a traditional ethernet frame can be any where from 46-1500 b
 from higher layers such as the Network, transport and application layers that actually being transmitted
 
 The Seventh and last part is the FCS(Frame Check Sequence), it is 4 bytes long, it represents the checksum value for entire
-frame, This checksum value is calculated by performing what's known as a cyclical redundancy check against the frame
+frame, This checksum value is calculated by performing what's known as a 'Cyclical Redundancy Check' against the frame
 
 Cyclical Redundancy Check(CRC) is an important concept for data integrity and is used all over computing, not just network
 transmissions.
 CRC is a mathematical transformation to create a no. that is larger set of data, any time u perform a CRC against a set of 
 data u should end up with the same checksum no.
 The reason it is included in the ethernet frame is so the receiving network interface can confirm that if it receives the
-uncorrupted data
+uncorrupted data.
 When a device gets ready for sending the ethernet frame, it collects all the information like the destination and the
-originating MAC address ,the data payload and so on. then it performs a CRC against that data and attaches the resulting
+originating MAC address, the data payload and so on. Then it performs a CRC against that data and attaches the resulting
 checksum no. as the Frame check Sequence
 At the end of the frame this data is then send across a link and received at the other end
 Here all the various fields of the ethernet frame r collected and now the receiving side performs a CRC against that data, 
@@ -270,7 +270,7 @@ known as DHCP(Dynamic Host Configuration Protocol) the IP address assigned this 
 Static IP address must be configured on a Node manually.
 
 In most cases static IP addresses r reserved for servers and network devices while dynamic IP addresses r reserved for 
-clients but their r certainly situations where this might not be true
+clients but their r certainly situations where this might not be true.
 
 IP Datagrams and Encapsulation -> Just like all the data packets at the ethernet layer have a specific name ethernet frames,
 So do packets at the network layer under the IP protocol a packet is usually refer to IP datagram
@@ -286,7 +286,7 @@ with IP4, infact 20 bytes is the minimum length of IP header, u couldn't fit all
 header in any less space
 
 3rd field (Service TypeField) these 8 bits can be used to specify details about quality of service or QoS technologies, These
-r services that allow routers to make decisions about which IP datagram may be more important then others
+r services that allow routers to make decisions about which IP datagram may be more important then others -@@
 
 4th field (Total Length) is 16 bit field, it indicates the total length of the IP datagram it's attached to
 
@@ -294,18 +294,18 @@ r services that allow routers to make decisions about which IP datagram may be m
 the largest datagram u can represent with 16 bits, If the total amount of data that needs to be sent is larger than what can
 fit in a single datagram, the IP layer needs to split this data up into many individual packets and when this happens the
 Identification field is used so that the receiving end understands that every packet with the same value in that field is 
-part of the same transmission
+part of the same transmission -@@
 
 6 th and 7th fields r Flags Field and Fragment Offset Field, the Flag field is used to indicate if a datagram is allowed to
 be fragmented, or to indicate that the datagram is already been fragmented
-Fragmentation is the process of taking a single IP datagram and splitting it up into several smaller datagrams
+Fragmentation is the process of taking a single IP datagram and splitting it up into several smaller datagrams.
 Well most networks operate with similar settings in terms of what size an IP datagram is allowed to be sometimes this could
 be configured differently, if a datagram has to cross from a network allowing a larger datagram size to one with a smaller
 datagram size, the datagram have to be fragmented into smaller ones
 The Fragment offset field contains values used by the receiving end to take all the parts from a fragmented packet and put
-them back together in a correct order
+them back together in a correct order -@@
 
-8th field(TTL) it is an 8 bit field that indicates how many router hops a datagram can traverse before it's thrown away
+8th field(TTL) it is an 8 bit field that indicates how many router HOPs a datagram can traverse before it's thrown away
 Every time a datagram reaches a new router, that router decrements the TTL field by 1, once this value reaches 0, a router 
 knows it doesn't have to forward datagram any further
 The main purpose of this field is to make sure that when their is misconfiguration in routing that causes an endless loop,
@@ -334,7 +334,7 @@ The IP Address Classes ->
 The IP addresses can be split into two sections the network ID and the host ID
 Ex -> 9.100.100.100, the network id will be the first octet '9' here and other 3 octets will come in Host ID
 Address Class System -> A way of defining how the global IP address space is split up
-their r 3 primary types of address classes ->
+Their r 3 primary types of address classes ->
 - Class A -> these r those where the 1st octet is used for the network ID and the last 3 r used for the Host ID
 - Class B -> these r where 1st two octets r used for the network ID and the last 2 used for the host ID
 - Class C -> these r where 1st three octets r used for the network ID and the last one used for the host ID
@@ -347,14 +347,14 @@ address, the possible values for the first octet is from 0-127 and go on for oth
 For Class B it would be from 128-191
 For Class C it would be from 192-224
 Class D addresses always begin with the bites 1110 and r used for multicasting which is how a single IP datagram can be sent
-to an entire network at once, these addresses began with decimal values between 224-239
+to an entire network at once, these addresses began with decimal values between 224-239 -@@
 Class E addresses make up all of the remaining IP addresses but they r unassigned and only used for testing purposes
 This class system has mostly being replaced by an system known as CIDR(Classless inter-domain routing)
 
 ARP(Address Resolution Protocol) -> It is a protocol used to discover the hardware address of a node with a certain IP 
 address, Once an IP datagram has being fully formed it needs to be encapsulated inside the ethernet frame, this means the
-transmission device needs a destination MAC address to complete the ethernet frame header.
-Almost all network connected devices will retain a local ARP table.
+transmission device needs a destination MAC address to complete the ethernet frame header.	-@@
+Almost all network connected devices will retain a local ARP table. -@@
 ARP table -> it is just a list of IP addresses and the MAC addresses associated with them
 
 Lets say we wants to send some data from Host 'A' to IP address 10.20.30.40, their might be the case that this destination
@@ -364,9 +364,9 @@ the local Network when the network interface that has been assigned 10.20.30.40 
 ARP response this response msg will contain the MAC address for the Network interfacing. Now the transmitting computer knows
 what MAC address to put in the destination hardware address field and the ethernet frame is ready for delivery, It will also
 likely store this IP address in it's local ARP table so it won't have to send that local ARP broadcast next time when it
-needs to communicate with this IP.
+needs to communicate with this IP.  -@@
 
-ARP table entries generally expire after a short amount of time to ensure changes in the network r accounted for.
+ARP table entries generally expire after a short amount of time to ensure changes in the network r accounted for. -@@
 
 Subnetting ->
 It is the process of taking a large network and splitting it up into many individual and smaller subnetworks or subnets
@@ -382,11 +382,14 @@ to the gateway router to the 9.0.0.0 class A network that router is now responsi
 system by looking at the host ID
 
 With Subnets u can spilt ur large networks up into many smaller one's, these individual subnets will have their own gateway
-routers serving as the ingress and egress point for each subnet
+routers serving as the ingress and egress point for each subnet.
+Ingress traffic is all traffic initiated at a remote and external location or within a network not under the host network.
+Egress traffic is the reverse of ingress traffic. Egress is all traffic is directed towards an external network and originated from
+inside the host network.
 
 Subnet masks ->
 In subnetting some bits that will normally comprise the Host ID r actually used for the subnet ID with all 3 of these ID's
-(Subnet,Host , Network) representable by single IP address, will know have a single 32 bit no. that can be accurately
+(Subnet, Host , Network) representable by single IP address, will know have a single 32 bit no. that can be accurately
 delivered across many different networks.
 
 At the internet level core routers only care about the network ID and use this to send the Datagram along to the appropriate
@@ -405,19 +408,19 @@ Subnet Mask  ->     1111 1111 . 1111 1111 . 1111 1111 . 0000 0000 // subnet mask
 Subnet mask which has part of the no. all the 1's tells us what we can ignore when computing a host ID and the part with 0's
 tells us what to keep
 
-we here r using the common subnet mask 255.255.255.0 the part that all 1's is to tell a router what part of an IP address is
-the subnet ID
+We here r using the common subnet mask 255.255.255.0 the part that all 1's is to tell a router what part of an IP address is
+the subnet ID.
 
 we know that 9.100.100.100 is a class A network so 9 is the first octet and we will here use last 3 octets, the no's which
 have corresponding 1's in the subnet mask are the subnet ID the no.'s in the remaining octet which has corresponding 0's r
-the host ID,
-the size of the subnet is entirely decided by it's subnet mask
+the host ID -@@
+The size of the subnet is entirely decided by it's subnet mask
 So for Example with a subnet mask of 255.255.255.0 here we know the last octet with 0 is remaining for host ID's regardless
-of what network or subnet ID's are
+of what network or subnet ID's are.
 
 A single 8 bit no. can represent 256 different numbers, or more specifically the numbers 0-255, but 0 is normally not used
 and 255 is normally reserved as a broadcast address for the subnet this means that only the no.'s from 1 to 254  r available
-for assignment to a host
+for assignment to a host -@@
 Generally speaking u r referred to the no. of host available in a subnet is the entire no.
 
 So even if that is understood two addresses with 0 and 255 r not available for assignment u still say that 8 bits host ID 
@@ -425,36 +428,36 @@ space has 256 address available not 254 this is bcz those other IP's r still IP 
 directly to a node on that subnet
 
 The subnet mask 255.255.255.224 will translate to 1111 1111.1111 1111.1111 1111.1110 0000 this means that we have 5 bit's of
-host ID space or a total of 32 addresses
+host ID space or a total of 32 addresses -@@
 
 Now if we r dealing with 9.100.100.100 with subnet mask of 255.255.255.224 now this subnet mask represents 27 of 1's followed
 by 5 of 0's a quicker way of referencing this is with the notation /27 the entire IP and subnet mask could be written now as
- -> 9.100.100.100/27
+ -> 9.100.100.100/27 -@@
 
-In general a subnet can usually only contain 2 less then the total no. of Host ID's available
+In general a subnet can usually only contain 2 less then the total no. of Host ID's available -@@
 
 Basic Binary Math ->
 Binary and Base two r same
 
 If u have 8 bit no. u can perform as 2**8(2 to the power 8) = 256, So it shows that a 8 bit no. can represent 256 decimal no.
-or from 0 to 255
+or from 0 to 255 -@@
 In the same way If u have 4 bit no. u can perform as 2**4 = 16, So it shows that a 4 bit no. can represent 16 decimal no. as
 it goes on with
 If u have 16 bit no. u can perform as 2**16 = 65536, So it shows that a 16 bit no. can represent 65536 decimal no.
 
-So we represent binary as base 2 and decimal as base 10
+So we represent binary as base 2 and decimal as base 10 -@@
 
 Ex -> lets take a base 10 no. with two columns of digits -> 00 00 and this will translate to 10**2 =100 which makes it
 now -> 99 99
 Similarly for base 10 no. with 3 columns of digits -> 00 00 00 and this will translate to 10**3=1000 which makes it now ->
-999 999 999
+999 999 999  -@@
 
 0+0 -> 0
 0+1 -> 1
 1+0 -> 1
-1+1 -> 10
+1+1 -> 10  -@@
 
-Two most important operators r AND & OR and 1 represents true and 0 represents false
+Two most important operators r AND & OR and 1 represents true and 0 represents false.
 
 Subnet Mask is a way for a computer to use AND operators to determine if an IP address exists on the same Network, this means
 the host id portion is also known since their will be anything leftout
@@ -464,40 +467,40 @@ We have IP address as -> 9    .    100    .     100   .     100
   Operation to Perform  AND         AND         AND         AND
   Subnet Mask  ->     1111 1111 . 1111 1111 . 1111 1111 . 0000 0000 // this is binary for 255.255.255.0
   Result       ->     0000 1001 . 0110 0100 . 0110 0100 . 0000 0000 // the Result would be the Network ID and subnet ID of 
-                                                                    // our portion which is
+                                                                    // our portion which is -@@
                         9       .   100     .    100    .    0
 The computer that just performed this operation can now compare the results with it's own Network ID to determine that is 
-the address is on the same network or different one.
+the address is on the same network or different one.   -@@
 
 CIDR -> Address classes were the first attempt in splitting up the global internet IP space, subnetting was introduced when
 it was realized that the address classes r not an efficient way for keeping classes organized but as the internet grows the
 traditional subnetting just couldn't keep up
 With Traditional subnetting and address classes the Network ID is always either 8 bit for class A networks, 16 bit for class
-B networks ,24 bits for class C networks
+B networks ,24 bits for class C networks -@@
 This means that their might only be 254 class A networks in existance but it also means that their r around 297 million 
 potential class C networks
 
 The Sizing of these networks are not always appropriate for the needs of most buissness
 
 So 254 hosts for class C is too small and 65534 of class B is too large, so many companies ended up with various adjoining
-class c networks to meat their needs that means the routing table ended up with bunch of entries for bunch of class c 
+class C networks to meat their needs that means the routing table ended up with bunch of entries for bunch of class C 
 networks that r all actually being routed with the same place this is where CIDR comes into play
 
 CIDR is more approriate approach for describing blocks of IP addresses, it expands on the concept of subnetting by using
-subnet masks to demarcate networks
+subnet masks to demarcate networks. -@@
 
-To Demarcate something means to set something off
-Demarcation point -> To describe where one network or system ends and another one begins
+To Demarcate something means to set something off -@@
+Demarcation point -> To describe where one network or system ends and another one begins -@@
 
 In previous model we relied on Network ID, Subnet ID and Host ID to deliver an IP datagram to the correct location with CIDR
 the Network ID and subnet ID r combined into one CIDR where we get this '/27' kind of notation which is also known as CIDR
 notation
-CIDR basically abondans the concept of address classes entirely allowing an address to be defined by only two individual ID's
+CIDR basically abondans the concept of address classes entirely allowing an address to be defined by only two individual ID's -@@
 
 Lets take IP address as -> 9    .    100    .     100   .     100
            Subnet Mask  ->255   .    255    .     255   .       0   // this can also be written as 9.100.100.10/24
 In the world in which we donot care about the address class of IP all we need is what the Network mask tells to determine the
-network ID in this case that would be 9.100.100 as the Host ID remains the same
+network ID in this case that would be 9.100.100 as the Host ID remains the same -@@
 
 Before this network sizes were static based on class A, B, C and only subnets can be of different sizes while CIDR allows for
 networks themselves to be in different sizes before this if a company needed more addresses then a single class c can provide
@@ -506,8 +509,8 @@ they need an entire 2nd class c but with CIDR they can combine that address spac
 these address instead of two
 
 It also important that u get additional available host ID's out of this practice, remember that u always lose 2 host ID's per
-network So if a /24 network is 8 host bits means 2**8 = 256 hosts then u only have 256 - 2 = 254 available IP's to assign
-If u need 2 networks of this size then u have 254+254 = 508 hosts on the otherhand
+network So if a /24 network is 8 host bits means 2**8 = 256 hosts then u only have 256 - 2 = 254 available IP's to assign -@@
+If u need 2 networks of this size then u have 254+254 = 508 hosts on the otherhand  -@@
 a single /23 network is 9 host bits means 2**9 = 512 and then 512 - 2 =510 hosts
 
 Basic Routing Concepts ->
