@@ -1028,7 +1028,7 @@ network C. Screenshot(76), then a switch ensures it get sent out to the interfac
 computer 2 recieves the frame, identifies it's own MAC address as the destination and knows it is intended for itself
 Computer 2 then strips away the ethernet frame leaving with IP datagram then perfroms a CRC and then recognize the
 destination MAC address as its own, Now the computer 2 strips away the IP datagram and leaves just only with the TCP segment
-,Screenshot(77), again the chechsum is checked then the computer 2 examines the destination port which is 80, the networking
+,Screenshot(77) , again the checksum is checked then the computer 2 examines the destination port which is 80, the networking
 stack on computer 2 checks to ensure that their is an open socket at Port 80, it's in the LISTEN state and held open by
 running the apcahe web server then computer 2 sees that this packet has sent the SYN flag set, So it examines the sequence
 no. and stores that since it will need to put the sequence no. in the acknowledgement field once it crafts the response.
@@ -1045,13 +1045,13 @@ Is sometime in the network isn't working as expected, the first place to look at
 
 Name Resolution->
 Why do we need DNS?
-Computers speak to each other in no.s at the lowest level all computers really understand r 1 and 0, hence these binary
+Computers speak to each other in no.'s at the lowest level all computers really understand r 1 and 0, hence these binary
 no.'s r represented in lots of different forms specially in networking as the IP and MAC addresses r just only binary
 no.'s that's why the DNS comes into play
 
 DNS -> A global and highly distributed network service that resolves strings of letters into IP addresses for you.
 
-Suppose u want's to check a whether website, to see what is temparature going to be like and it is much easier to type ->
+Suppose u want's to check a weather website, to see what is temparature going to be like and it is much easier to type ->
 www.weather.com into a web browser then is to remember one of the IP addresses for this site and the IP address for a
 Domain name can also change all the time for lot of different reasons
 
@@ -1072,7 +1072,7 @@ of keeping all of ur web servers in one place, u can distribute them accross dat
 one in newyork visiting a website might get served by the server close to newyork, while someone in New Delhi might get
 served to a server close to New Delhi and DNS helps provide this functionality, bcz of it's global structure the DNS lets
 organizations decide if u r in the region resolve the domain name to this IP and if u r in another region then it will
-resolve the domain name to another IP.
+resolve the domain name to another IP.  -@@
 
 DNS serves lots of purposes
 
@@ -1082,28 +1082,30 @@ At the most basic the DNS is a system that converts Domain Names to IP addresses
 Domain Name to a IP address is known as Name Resolution
 - The DNS server is one of the things that need to be specifically configured at a Node on a Network, For a computer to
 operate on a modern network they need to have certain no. of things configured such as IP address, Subnet Mask, Gateway of
-a Host and DNS server for a network.
-These r almost always the things that must be configured for a Host to operate on a Network in an aspected way.
-A computer can operate just fine without DNS Server being configured but this make things difficult for any human who is
-using that computer.
+a Host and DNS server for a network.  -@@
 
-There r 5 primary types of DNS servers ->
+These r almost always the things that must be configured for a Host to operate on a Network in an aspected way.
+
+A computer can operate just fine without DNS Server being configured but this make things difficult for any human who is
+using that computer. -@@
+
+There r 5 primary types of DNS servers -> -@@
 1) Caching name servers
 2) Recursive name servers
 3) Root name servers
 4) TLD name servers
 5) Authoritative name servers
 
-It is important to know that any given DNS server can fullfill many of these roles at once
-Caching and Recursive name servers generally provided by an ISP or ur local network
-Caching and Recursive name servers purpose is to store domain name lookups for a certain amount of time.
+It is important to know that any given DNS server can fullfill many of these roles at once  -@@
+Caching and Recursive name servers generally provided by an ISP or ur local network  -@@
+Caching and Recursive name servers purpose is to store domain name lookups for a certain amount of time.  -@@
 
 Their r lots of steps in order to perform a fully qualified resolution of a Domain name, In order to prevent this from
 happening every single time when new TCP connection is established ur ISP or local network will generally have a
-caching name server available, Most caching name servers r also recursive name servers.
+caching name server available, Most caching name servers r also recursive name servers.  -@@
 
 Recursive name servers r ones that perform full DNS resolution requests, In most cases ur local name server will perform the
-duties of both but it is definatly possible for a name server to be either just caching or just recursive.
+duties of both but it is definatly possible for a name server to be either just caching or just recursive. -@@
 
 Scenerio -> u and ur friend both connected to a same network and u both wants to checkout facebook.com, then ur frnd enters
 the www.facebook.com into the web browser which means their computer now needs to know the IP of facebook.com in order to
@@ -1118,7 +1120,9 @@ taking too.
 Since the domain name facebook.com had just been looked up, So the local name server still has the IP they resolved to store
 and is able to deliver that back to ur computer without having to perform a full lookup, this is how the same servers act
 as a caching server.
-All domain name in a Global DNS system have a TTL or Time To Live
+
+All domain name in a Global DNS system have a TTL or Time To Live.  -@@
+
 TTL is a value in seconds that can be configured by the owner of a domain name for how long a name server is allowed to
 cache an entry before it should discard it and perform a full resolution again.
 
@@ -1126,22 +1130,19 @@ Several years ago it was normal for these TTL's to be really long, this is bcz t
 internet was just much less, So network administrator's didn't wanna waste what bandwidth was available to them by
 constantly performing full DNS lookups.
 As the internet has grown and got faster, these TTL's for most domains have dropped from anywhere to few minutes to few
-hours, but it's important to know that sometimes u still running to a domain names that have very lengty TTL's, it means
+hours, but it's important to know that sometimes u still running to a domain names that have very lengthy TTL's, it means
 that it can take up to the length of a total TTL for a change in a DNS record to be known to the entire internet.
 
-When ur local recursive server needs to perform a full recursive resolution.
+When ur local recursive server needs to perform a full recursive resolution  ->  -@@
 Step 1-> To contact a root name server, their r 13 total root name servers and they r responsible for directing queries
-toward the appropriate TLD name server.sreenshot(78), In the past these 13 root servers where distributed to very specific
+toward the appropriate TLD name server. sreenshot(78), In the past these 13 root servers where distributed to very specific
 geographic regions but today they r mostly distributed across the globe via Anycast.
-
 Anycast is a technique that's route to route traffic to different destinations depending on factors like location, 
-congestion or link health.
-
+congestion or link health. 
 Using Anycast a computer can send a datagram to a specific IP but get see it routed to one of many actual destinations
 depending on a few factors, their r also not only totally 13 root name servers any more so it's better to think of them as
 13 authorities to provide a root name lookups as a service, The root server will respond to a DNS lookup with a TLD name
 server that should be queried.Screenshot(79)
-
 TLD(Top Level Domain) it represents the top of the hierachial DNS name resolution system, a TLD is the last part of any
 domain name, such as .com portion should be think as the TLD, For each TLD in existance their is TLD name server but just
 like root servers this doesn't mean their is only physically one server in question, It's most likely a global distribution
@@ -1149,7 +1150,6 @@ of Anycast assessible servers responsible for each TLD, The TLD name servers res
 informing the computer performing the name lookup with what authoritive name server to contact, authoritive name servers r
 responsible for last two parts of any domain name which is the resolution and single organization may be responsible for
 DNS lookups.
-
 Using www.weather.com as an example, the TLD name server would point a lookup at the authoritive server for weather.com
 which would likely be controlled by the weather channel, the organization itself that runs the site.
 Finally the DNS lookup can be redirected at the authorative server for weather.com which would finally provide the actual
@@ -1168,21 +1168,21 @@ server for every TCP connection needed.
 
 DNS and UDP ->
 DNS is a great example of application layer service that uses UDP for the transport layer, instead of TCP, this can be
-broken down into a few simple reason
+broken down into a few simple reason. -@@
 As the UDP is connectionless, this means their is no setup or tear down of a connection, So much less traffic needs to be
 transmitted overall, A single DNS request and it's response can usally fit inside of a single UDP datagram making it an
 ideal candidate for a connectionless protocol, it's also worth calling out that DNS can generate a lot of traffic.
 It's true that caches of DNS entries r stored on both local machines and caching name servers but it is also true that if
-full resolution needs to be process we r then taking about a lot more traffic
+full resolution needs to be process we r then taking about a lot more traffic -@@
 
-For a full DNS lookup to take place via TCP ->
+For a full DNS lookup to take place via TCP -> -@@
 First the host that is making the DNS resolution request would send a SYN packet to the local name server on port 53 which
 is the Port the DNS listens on, this name server then need to respond with SYN/ACK packet that means the original host have
 to respond with an ACK in order to complete the 3 way handshake.
 Once the connection has been established, the original host will have to send the actual request, Such as if we ask for IP
 address for facebook.com plz and then after this request the name server has to respond with another ACK which says I got ur
 request for facebook.com.
-And then 5 packets r send now,Screenshot(81), In this scenrio the 1st caching name server doesn't have anything cached for
+And then 5 packets r send till now,Screenshot(81), In this scenrio the 1st caching name server doesn't have anything cached for
 facebook.com so it needs to talk to a Root name server to find out who is responsible for the '.com' TLD and this will
 require a 3 way handshake, the actual request, the ACK other request, the response and then the ACK of the response and then
 finally the connection has to be closed via 4 way handshake which is 11 more packets means 16 total packets, Screenshot(82)
@@ -1192,7 +1192,7 @@ to repeat the entire process one more time while taking to the authoritive name 
 facebook.com which means 11 more packets means the total packets now r 38, Screenshot(83)
 Now that the local name server finally has the IP address of facebook.com, It can finally respond to the initial request
 In response to the DNS resolver that originally made the request and then this computer sends an ACK back to confirm that
-it receives the response that's two more packets so now the total packets is 40.Screenshot(84)
+it receives the response that's two more packets so now the total packets is 40. Screenshot(84)
 Finally the TCP connection needs to be closed via 4 way handshake this means the total packets now 44 at the minimum in
 order to do fully recursive DNS request to be fullfilled via TCP. Screenshot(85)
 44 packets is really a huge no. in terms of a how fast modern networks orperate but it heads up fast as u can see.
@@ -1202,7 +1202,7 @@ Remember the DNS traffic is precorssor to actual traffic
 A computer almost always performs a DNS lookup bcz it needs to know the IP of the Domain Name in order to send an additional
 data.
 
-For a full DNS lookup to take place via UDP ->
+For a full DNS lookup to take place via UDP -> -@@
 The computer sends a UDP packet or 1 packet to it's local name server on Port 53 asking for the IP of facebook.com, the
 local name server access a recurssive server and sends up a UDP packet to the root server which sends a response containing
 a proper TLD name server now total packets is 3, The resurssive server sends a packet to the TLD server and receives back a
@@ -1215,30 +1215,30 @@ So this shows that how much TCP really requires as the Packets for the full name
 requires only 8 and So for DNS it is just not needed via TCP and that's also the one of the reasons why UDP is needed then
 the more robust TCP.
 The DNS resolver asks again if it doesn't get the response for the error handling, basically the same functionality the TCP
-provides at the transport layer is provided by the DNS at the application layer in the simple manner.
+provides at the transport layer is provided by the DNS at the application layer in the simple manner. -@@
 A DNS server never needs to care about anything but responding to incoming lookups and a DNS resolver simply needs to 
-perform lookups and repeat them if they don't succeded which is real show case to the simplicity of both the DNS and UDP.
+perform lookups and repeat them if they don't succeded which is real show case to the simplicity of both the DNS and UDP.  -@@
 
 The DNS over TCP does infact exist and is also in use all over, as the web has got more complex it's no longer the case
 that all DNS lookup responses can fit in a single UDP datagram, In these situations the DNS name server will respond with a
 packet explaining that the response is too large, the DNS client will then establish a TCP connection inorder to perform a
-lookup.
+lookup. -@@
 
 Name Resolution in Practice ->
 Resource Record Types -> DNS in practice operates with a set of defined resource record types, these allow for different
 kinds of DNS resolutions to take place, their r dozens of different resource record types defined but a lot of them only
-server very specialized purposes, the most common resource record is known as 'A' record.
+serve very specialized purposes, the most common resource record is known as 'A' record.
 
 An 'A record' is used to point a certain domain name at a certain IPv4 IP address, In the previous scenerios and examples we
 were making the assumption that the DNS resolver was asking for the 'A record' for a domain name, In it's most basic use a
 single 'A record' is configured for a single domain name but a single domain name can have multiple 'A' records too, this
-allows for a technique known as DNS Round robin to be used to balance traffic across multiple IP's.
+allows for a technique known as DNS Round robin to be used to balance traffic across multiple IP's.  -@@
 
 Round Robin is a concept that involves iterating over a list of items one by one in an orderly fashion, this ensure that a
-fairly equal balance of each entry on the list is selected.
+fairly equal balance of each entry on the list is selected. -@@
 Suppose we r incharge of the domain name -> www.microsoft.com, Microsoft is a large company which means it will see a lot of
 traffic, to help balance this traffic across multiple servers we can figure 4 'A records' for www.microsoft.com at the
-authoritive name server for the microsoft.com domain we will use the IP'S ->
+authoritive name server for the microsoft.com domain we will use the IP'S -> -@@
 10.1.1.1
 10.1.1.2
 10.1.1.3
@@ -1246,11 +1246,11 @@ authoritive name server for the microsoft.com domain we will use the IP'S ->
 When a DNS resolver performs a lookup for www.microsoft.com all 4 IP's would be returned in the order first configured means
 the 10.1.1.1 followed by 10.1.1.2 followed by 10.1.1.3 and finally 10.1.1.4, the DNS resolving computer would know that it
 should try the first entry which is 10.1.1.1 but it knows about all 4 just for the case when the connection to 10.1.1.1
-fails.
+fails. -@@
 The next computer to perform a lookup for www.microsoft.com would also receive all 4 IP's in the response but the ordering
 will have changed as the first entry will be 10.1.1.2 followed by 10.1.1.3 followed by 10.1.1.4 and finally 10.1.1.1, this
 pattern will continue for every DNS resolution attempt cyclying through all of the 'A records' configured and balancing the
-traffic across these IP's and this is basic's of how the DNS Round Robin logic works.
+traffic across these IP's and this is basic's of how the DNS Round Robin logic works.  -@@
 
 Another resource type which is becoming more popular is Quad A(AAAA) record, a Quad A record is very similar to A record
 except it returns an IPv6 address instead of an IPv4 address.
@@ -1267,7 +1267,7 @@ So if we look on above example of CNAME for www.microsoft.com and microsoft.com 
 - We can setup identical 'A records' for both microsoft.com and www.microsoft.com domain names and this will work fine but
 if the underlying IP address ever changes we need to change it at two places, as the 'A records' for both microsoft.com and
 www.microsoft.com and by setting up a CNAME that points microsoft.com at www.microsoft.com u only have to change the
-'A Record' for www.microsoft.com and the clients pointing at either domain will get the new IP address.
+'A Record' for www.microsoft.com and the clients pointing at either domain will get the new IP address.  -@@
 
 MX record - mail exchange -> This resource record is used in order to deliver each email to the correct server, many
 companies run their web and mail servers on different machines with different IP's, So the MX record makes it easy to ensure
@@ -1275,20 +1275,20 @@ that email gets delivered to a companies mail server while other traffic like we
 A record type similar to MX record is the SRV record - service record, SRV record is used to define the location of various
 specific services, It serves the exact same purpose as the MX record type except for one thing while MX is only for mail
 services, in SRV record can be defined to return the specifics of many different service types for example SRV records r
-often used to return the records of services like 'caldev' which is a calender and schedulling service.
+often used to return the records of services like 'caldev' which is a calender and schedulling service.  -@@
 
 TXT record - text -> It was orignally intended to be used only for associating some discrivtive text with a domain name for
 human consumption, the idea was that u can leave notes and msgs that humans can discover and read about the arbitary
 specifics of ur network, but over the years as the internet and services run on it have become more and more complex, the
-TXT record has been increasingly used to convey additional data intended for computers to process.
+TXT record has been increasingly used to convey additional data intended for computers to process. -@@
 Since a TXT record has a field that is entirely free form, we can use it to communicate data which was not originally
 intended to be communicated by a system like DNS, this TXT record is often used to communicate configuration preferences
-about network services that u can trust this with other organizations to handle for ur domain.
+about network services that u can trust this with other organizations to handle for ur domain. -@@
 For example it's common for a TXT record to be used to convey additional info to an email as a Service Provider which is a
-company that handles ur email delivery for u.
+company that handles ur email delivery for u. -@@
 
 Their r lots of other DNS resource records types in common use like an NS or SOA records which r used to define an
-authorative informations about DNS zones
+authorative informations about DNS zones  -@@
 
 Anatomy of a Domain Name -> Any given domain name have 3 primary parts and they all serves specific purposes such as domain
 name www.google.com, the 3 primary parts here r www, google, com
@@ -1300,50 +1300,48 @@ Some of the common TLD's r -> .com, .edu, .net etc
 .cn TLD is a country specific TLD for china
 
 Many of the TLD's originally defined have become very crowded due to the growth of the internet
-So today the no. of vanity TLD's available everthing from .muesem to .pizza as the TLD
+So today the no. of vanity TLD's available everthing from .muesem to .pizza as the TLD -@@
 
 Administration and defination of TLD's is handled by a non profit organization known as ICANN(Internet Corporation for
 Assigned Names and Numbers), ICANN is the sister organization to the IANA and together they help define and control both
-the global IP spaces along with the global DNS system.
+the global IP spaces along with the global DNS system. -@@
 
-A domain is the name commonly used to refer the 2nd part of the domain name which would be google in our case.
+A domain is the name commonly used to refer the 2nd part of the domain name which would be google in our case. -@@
 
 Domains r used to demarcate where control moves from a TLD name server to an authoritative name server, which is typically
-under control of an independent organization which is outside of ICANN.
+under control of an independent organization which is outside of ICANN.   -@@
 
 Domains can be registered or choosen by any individual or company, but they must all end in one of the predefined TLD's.
 
 The 'www' portion is known as the subdomain, sometimes also refered to as Host name, if it is being assigned to only one
-Host.
+Host. -@@
 
 When u combine all above parts together u then have FQDN.
 
-FQDN(Fully Qualified Domain Name) -> This is when u combine all the three parts.
+FQDN(Fully Qualified Domain Name) -> This is when u combine all the three parts.   -@@
 Well it costs money to officially register a domain with a registrar, Subdomains can be freely choosen and assigned by
 anyone who controls such a registered domain.
 
-A registrar is just a company that has an agreement with ICANN to sell unregistered domain names.
+A registrar is just a company that has an agreement with ICANN to sell unregistered domain names.  -@@
 
 Technically u can have lot's of subdomain names, For ex-> host.sub.sub.subdomain.domain.com could be completely valid, 
-although u rarely see FQDN names with that many levels.
+although u rarely see FQDN names with that many levels.   -@@
 
-DNS can technically support upto 127 levels of domain in total for a single FQDN.
+DNS can technically support upto 127 levels of domain in total for a single FQDN.  -@@
+Their r some other restrictions too that how the domain name can be specified, such as each individual section can be only 63
+characters long. A complete FQDN is limited to a total of 255 characters. -@@
 
-Their some other restrictions too that how the domain name can be specified, such as each individual section can be only 63
-characters long.
-A complete FQDN is limited to a total of 255 characters.
-
-DNS Zones -> A authoritative name server is actually responsible for a specific DNS zone.
+DNS Zones -> A authoritative name server is actually responsible for a specific DNS zone. -@@
 
 DNS zone is a hierarchial concept, the root name servers covered above r responsible for the root zone, each TLD name server
 is responsible for the zone covering it's specific TLD and what we refer to as authoritative name servers r responsible for
-even finer grain zones underneath that
+even finer grain zones underneath that. -@@
 
 The root and TLD name servers r actually just authoritative name servers too, it's just that the zones that they r 
-authoritative for r special cases.
+authoritative for r special cases.  -@@
 
 Zones don't overlap for ex the adminstrative authority for the TLD name server for the .com TLD doesn't incompass the
-google.com domain instead it ends with the authoritative name server responsible for google.com.
+google.com domain instead it ends with the authoritative name server responsible for google.com.  -@@
 
 The purpose of DNS zones is to allow for easier control over multiple levels of a domain, as the no. of resource record in a
 single domain name increases it becomes more of a headache to manage them all.
@@ -1353,17 +1351,16 @@ company that owns the domain as largecompany.com and this company has offices in
 office has around 200 people with their own uniquely named desktop computer and now this would be 600 'A-records' to keep
 track off if they all have being configured as a single zone, but what the company can do instead is that they can split
 office into their own zone, So now we can have la.largecompany.com, pa.largecompany.com and sh.largecompany.com as
-subdomains each with their own DNS Zones. Screenshot(87)
+subdomains each with their own DNS Zones. Screenshot(87) -@@
 A total of 4 authorative name servers would now be required for the setup, one for largecompany.com and one for the each
-subdomains.
+subdomains. -@@
 
 Zones r configured through known as Zone files,these r Simple configuration files that declare all resource records for a
-particular zone.
-So a zone file has to contain an SOA(Start of Authority) resource record declaration.
-SOA -> It declares the zone and the name of the name server that is authorative for it.
+particular zone. So a zone file has to contain an SOA(Start of Authority) resource record declaration. -@@
+SOA -> It declares the zone and the name of the name server that is authorative for it. -@@
 Along with the SOA record u will usually find NS records
 
-NS records -> It indicates other name servers that might also be responsible for this zone.
+NS records -> It indicates other name servers that might also be responsible for this zone.  -@@
 For simplicity we have been refering the server as singular when we r discussing what is responsible for zone whether at the
 root, TLD or Domain level, but r often going to be multiple physical servers with their own FQDN's and IP addresses involved
 Having mulitple servers in place for something as important as DNS is pretty common bcz if one server would have a problem
@@ -1377,9 +1374,9 @@ Some times u will also see Reverse lookup zone files.
 
 Reverse lookup zone files -> These let DNS resolvers ask for an IP and get the FQDN associated with it returned.
 These reverse lookup zones files r same as the zone files, except instead of A and AAAA records which resolve names to IP's
-u will find mostly pointer resource records declarations.
+u will find mostly pointer resource records declarations.  -@@
 
-PTR(Pointer Resource Record) -> It resolves an IP to a Name.
+PTR(Pointer Resource Record) -> It resolves an IP to a Name. -@@
 
 Overview of DHCP -> Managing hosts on a network can be time consuming task, every single computer on a modern TCP/IP based
 network needs to have atleast 4 things specifically configured.
